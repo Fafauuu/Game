@@ -10,13 +10,15 @@ public class Game {
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Action action = new Action();
         view.printNumbers();
-        Warrior warrior = new Warrior();
+        GameObject warrior1 = new GameObject(0,0, ID.Ally);
 
 
-        action.placeWarrior(warrior.createKnights(3));
-        action.placeWarrior(warrior.createArchers(4));
-        action.placeWarrior(warrior.createKnights(8));
-        action.placeWarrior(warrior.createArchers(3));
+//        action.placeWarrior(warrior.createKnights(3));
+//        action.placeWarrior(warrior.createArchers(4));
+//        action.placeWarrior(warrior.createKnights(8));
+//        action.placeWarrior(warrior.createArchers(3));
+
+//        action.placeWarrior(warrior1);
 
         for (int x = 0; x < 10; x++) {
             Thread.sleep(1000);
