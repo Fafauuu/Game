@@ -14,9 +14,7 @@ public class Action {
 //            }
 //        }
 
-    }
-
-    public void placeWarrior(int[] warriors) {
+    }    public void placeWarrior(int[] warriors) {
         View view = new View();
         int board[][] = view.getField();
 

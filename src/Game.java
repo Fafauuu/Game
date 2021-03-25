@@ -14,9 +14,9 @@ public class Game {
 
 
         action.placeWarrior(warrior.createKnights(3));
-//        action.placeWarrior(warrior.createArchers(4));
-//        action.placeWarrior(warrior.createKnights(8));
-//        action.placeWarrior(warrior.createArchers(3));
+        action.placeWarrior(warrior.createArchers(4));
+        action.placeWarrior(warrior.createKnights(8));
+        action.placeWarrior(warrior.createArchers(3));
 
         for (int x = 0; x < 10; x++) {
             Thread.sleep(1000);
