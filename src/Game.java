@@ -1,12 +1,14 @@
 import javax.swing.JFrame;
+import java.awt.*;
 
 
 public class Game {
 
     public static void main(String[] args) throws InterruptedException {
         View view = new View();
-//        view.paint(view.getGraphics());
-        view.setLocation(200,200);
+        view.setEmptyField(view.size);
+//        view.paint();
+        view.setLocation(3200,400);
         view.setSize(600,600);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        Action action = new Action();
@@ -22,6 +24,8 @@ public class Game {
 //        action.placeWarrior(warrior1);
 
         for (int x = 0; x < 10; x++) {
+            System.out.println(view.newField.size());
+            System.out.println(view.newField.get(x).size());
             Thread.sleep(1000);
             view.setVisible(true);
             view.repaint();

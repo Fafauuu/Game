@@ -55,19 +55,24 @@ public class GameObject {
 //        return warriors;
 //    }
 
-    public Color objectColor() {
+    public Color objectColor(GameObject object) {
 
         int r = 0, g = 0, b = 0;
 
-        if (hp > 50 && hp <= 100) {
+        if (object.getHp() > 50 && object.getHp() <= 100) {
             r=0;
             g=255;
             b=0;
         }
 
-        if(hp>0 && hp<=50){
+        if(object.getHp()>0 && object.getHp()<=50){
             r=0;
             g=70;
+            b=0;
+        }
+        if (object.getId()==ID.Ground){
+            r=0;
+            g=0;
             b=0;
         }
 
