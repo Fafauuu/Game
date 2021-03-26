@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import java.awt.*;
+
 
 public class Action {
 
@@ -17,31 +20,36 @@ public class Action {
 ////        }
 //}
 
-        public void placeWarrior(GameObject[] warriors) {
+    public void placeWarriors(ArrayList<GameObject> warriors) {
         View view = new View();
-        ArrayList<ArrayList<GameObject>> board = view.getField();
+        ArrayList<ArrayList<GameObject>> board = view.getNewField();
 
-        int startingRow = 0, startingColumn = 0;
+        board.get(0).addAll(warriors);
+//        view.newField = board;
+//        for (int i = 0; i < warriors.size(); i++) {
+//            board.get(i).set(i, warriors.get(i));
+//        }
 
-        outerLoop:
-        for (int i = 0; i < view.size; i++) {
-            for (int j = 0; j < view.size; j++) {
-                if (board.get(i).get(j).getId() == ID.Ground) continue outerLoop;
-                startingColumn++;
-            }
-            startingRow++;
-        }
-
-        double rows = Math.ceil(((double) startingRow*view.size + startingColumn + warriors.length)/View.size);
-        int x = 0;
-        for (int i = startingRow; i < rows; i++) {
-            for (int j = startingColumn; j < view.size; j++) {
-                board.get(i).set(j, warriors[x++]);
-                if(x >= warriors.length)return;
-            }startingColumn=0;
-        }
-
-//    public void moveUp(){
+//        int startingRow = 0, startingColumn = 0;
+//
+//        outerLoop:
+//        for (int i = 0; i < view.size; i++) {
+//            for (int j = 0; j < view.size; j++) {
+//                if (board.get(i).get(j).getId() == ID.Ground) continue outerLoop;
+//                startingColumn++;
+//            }
+//            startingRow++;
+//        }
+//
+//        double rows = Math.ceil(((double) startingRow*view.size + startingColumn + warriors.size())/View.size);
+//        int x = 0;
+//        for (int i = startingRow; i < rows; i++) {
+//            for (int j = startingColumn; j < view.size; j++) {
+//                board.get(i).set(j, warriors.get(x++));
+//                if(x >= warriors.size())return;
+//            }startingColumn=0;
+//        }
 //    }
+
     }
 }

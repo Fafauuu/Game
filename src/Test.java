@@ -4,6 +4,17 @@
 //
 //    public static void main(String[] args) {
 //
+////        GameObject object = new GameObject();
+////        ArrayList<GameObject> list = new ArrayList<>();
+////        list = object.createObjects(3,0,0);
+////
+////        for (int i = 0; i < 3; i++) {
+////            System.out.println(list.get(i).getId());
+////        }
+////
+////        }
+////    }
+//
 //        int size = 10;
 //
 //        ArrayList<ArrayList<String>> newField = new ArrayList(10);
@@ -26,19 +37,20 @@
 ////            newField.get(j).add("string");
 ////        }
 //
-//        System.out.println(newField.size());
+//        System.out.println(newField.size() + " ");
 //
 //        for (int i = 0; i < 10; i++) {
-//            System.out.println(newField.get(i).size());
+//            System.out.print(newField.get(i).size() + " ");
 //
 //        }
+//        System.out.println();
 //
-//        for (int i = 0; i < 10; i++) {
-//            for (int j = 0; j < 10; j++) {
-//                System.out.println(newField.get(i).get(j));
-//            }
+////        for (int i = 0; i < 10; i++) {
+////            for (int j = 0; j < 10; j++) {
+////                System.out.println(newField.get(i).get(j));
+////            }
 //
-//        }
+//
 //
 //        for (int i = 0; i < 10; i++) {
 //            System.out.println(newField.get(i));

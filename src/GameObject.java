@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GameObject {
 
@@ -13,6 +14,9 @@ public class GameObject {
         this.id = id;
     }
 
+    public GameObject(){
+
+    }
 
 
     public int getX() {
@@ -47,13 +51,13 @@ public class GameObject {
         this.id = id;
     }
 
-    //    public Warrior[] createWarriors(int number, int startingX, int startingY){
-//        Warrior[] warriors = new Warrior[number];
-//        for (int i = 0; i < number; i++) {
-//            warriors[i] = new Warrior(startingX,startingY);
-//        }
-//        return warriors;
-//    }
+    public ArrayList<GameObject> createObjects(int number, int startingX, int startingY){
+        ArrayList<GameObject> warriors = new ArrayList<>(number);
+        for (int i = 0; i < number; i++) {
+            warriors.add(new GameObject(startingX, startingY, ID.Ally));
+        }
+        return warriors;
+    }
 
     public Color objectColor(GameObject object) {
 
