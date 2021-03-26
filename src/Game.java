@@ -5,12 +5,13 @@ public class Game {
 
     public static void main(String[] args) throws InterruptedException {
         View view = new View();
+//        view.paint(view.getGraphics());
         view.setLocation(200,200);
         view.setSize(600,600);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Action action = new Action();
-        view.printNumbers();
-        GameObject warrior1 = new GameObject(0,0, ID.Ally);
+//        Action action = new Action();
+//        view.printNumbers();
+//        GameObject warrior1 = new GameObject(0,0, ID.Ally);
 
 
 //        action.placeWarrior(warrior.createKnights(3));
@@ -25,6 +26,7 @@ public class Game {
             view.setVisible(true);
             view.repaint();
             view.printNumbers();
+            System.out.println(x);
         }
     }
 }

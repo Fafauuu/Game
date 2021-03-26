@@ -1,5 +1,6 @@
 import javax.swing.JFrame;
 import java.awt.*;
+import java.util.ArrayList;
 
 
 public class View extends JFrame {
@@ -20,49 +21,70 @@ public class View extends JFrame {
 
     public static int size = 10;
 
-    public static GameObject[][]  field= new GameObject[size][size];
+//    public static GameObject[][]  field= new GameObject[size][size];
+    ArrayList<ArrayList<GameObject>> newField = new ArrayList<>(size);
 
 
-    private void setField(int size){
-//        int x = 0, y = 0;
-        ID id = ID.Ground;
+    private void setField(int size) {
+////        int x = 0, y = 0;
+//        ID id = ID.Ground;
+//
+////        GameObject empty = new GameObject(x, y, id);
+//        for (int i = 0; i < size; i++) {
+//            for (int j = 0; j < size; j++) {
+//                field[i][j] = new GameObject(i, j, id);
+//            }
+//        }
 
-//        GameObject empty = new GameObject(x, y, id);
+
         for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                field[i][j] = new GameObject(i, j, id);
+            newField.add(new ArrayList<>(size));
+
+            for (int k = 0; k < newField.size(); k++) {
+                for (int j = 0; j < newField.get(k).size(); j++) {
+                    newField.get(k).set(k, new GameObject(k, j, ID.Ground));
+                }
+
             }
         }
     }
 
-    public GameObject[][] getField() {
-        return field;
+    public ArrayList getField() {
+        return newField;
     }
 
     public void printNumbers(){
-        for (int i = 0; i < View.field.length; i++) {
-            for (int j = 0; j < field[0].length; j++) {
-                System.out.print(field[i][j]);
+        for (int i = 0; i < newField.size(); i++) {
+            for (int j = 0; j < newField.get(i).size(); j++) {
+                System.out.print(newField.get(j));
             }
             System.out.println();
         }System.out.println();
     }
+//    public void printNumbers(){
+//        newField.forEach(outer -> {
+//            outer.forEach(System.out::println);
+//        });
+//    }
+
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        for (int row = 0; row < field.length; row++) {
-            for (int column = 0; column < field[0].length; column++) {
+        setField(size);
+
+        for (int row = 0; row < newField.size(); row++) {
+            for (int column = 0; column < newField.get(row).size(); column++) {
 
                 Color color = Color.BLACK;
-                if(field[row][column].getId() == ID.Ground) color = Color.WHITE;
-                if(field[row][column].getId() == ID.Ally) color = field[row][column].objectColor();
+                if(newField.get(row).get(column).getId() == ID.Ground) color = Color.GREEN;
+                if(newField.get(row).get(column).getId() == ID.Ally) color = newField.get(row).get(column).objectColor();
 
 
 //                Color color;
 //                switch (field[row][column]) {
-//                    case fiel
+//                    case 0:
 //                        color = Color.GREEN;
 //                        break;
 //                    case 1:
