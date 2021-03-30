@@ -1,4 +1,4 @@
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -15,9 +15,11 @@ public class View extends JFrame {
             newField.add(new ArrayList<>());
         }
 
+        GameObject ground = new GameObject(ID.Ground);
+
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                newField.get(i).add(j, new GameObject(i, j, ID.Ground));
+                newField.get(i).add(j, ground);
             }
         }
     }
@@ -26,16 +28,25 @@ public class View extends JFrame {
         return newField;
     }
 
-    public void printNumbers(){
-            for (int i = 0; i < newField.size(); i++) {
-                for (int j = 0; j < newField.get(i).size(); j++) {
-                    System.out.print(newField.get(i).get(j).getId());
-                    System.out.print(" ");
-                }
-                System.out.println();
+    public void printNumbers() {
+        for (int i = 0; i < newField.size(); i++) {
+            for (int j = 0; j < newField.get(i).size(); j++) {
+                System.out.print(newField.get(i).get(j).getId());
+                System.out.print(" ");
             }
             System.out.println();
         }
+        System.out.println();
+
+//        for (int i = 0; i < newField.size(); i++) {
+//            for (int j = 0; j < newField.get(i).size(); j++) {
+//                System.out.print(newField.get(i).get(j));
+//                System.out.print(" ");
+//            }
+//            System.out.println();
+//        }
+//        System.out.println();
+    }
 
 //    public void printNumbers(){
 //        newField.forEach(outer -> {
@@ -44,73 +55,65 @@ public class View extends JFrame {
 //    }
 
 
-//    private Color setColor(){
-//        int r=255,g=255,b=255;
-//
-//        for (int i = 0; i < newField.size(); i++) {
-//            for (int j = 0; j < newField.size(); j++) {
-//                if (newField.get(i).get(j).getId() == ID.Ground) {
-//                        r = 0;
-//                        g = 70;
-//                        b = 0;
-//                    }
-//                    if (newField.get(i).get(j).getId() == ID.Ally) {
-//                        r = 80;
-//                        g = 50;
-//                        b = 70;
-//                    }
-//            }
-//        }
-//        Color color = new Color(r,g,b);
-//
-//        return color;
-//    }
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
 
-        @Override
-        public void paint (Graphics g){
-            super.paint(g);
+        int rectSize = 40;
+        int red = 255, green = 255, blue = 255;
 
-            int r = 200, green = 0, b = 80;
+        for (int i = 0; i < newField.size(); i++) {
+            for (int j = 0; j < newField.size(); j++) {
 
-            for (int i = 0; i < newField.size(); i++) {
-                for (int j = 0; j < newField.size(); j++) {
+//                    System.out.println("i = " + i + " j = " + j + " ID = " + newField.get(i).get(j).getId());
 
-                    System.out.println("i = " + i + " j = " + j + " ID = " + newField.get(i).get(j).getId());
+                GameObject object = new GameObject();
+
+                if (newField.get(i).get(j).getId() == ID.Ground) {
+                    red = 0;
+                    green = 70;
+                    blue = 0;
+                }
+
+                if (newField.get(i).get(j).getId() == ID.Ally) {
+                    int[] rgb = object.objectColor(newField.get(i).get(j));
+                    red = rgb[0];
+                    green = rgb[1];
+                    blue = rgb[2];
+                }
 
 
-//                    if (newField.get(i).get(j).getHp() > 50 && newField.get(i).get(j).getHp() <= 100) {
-//                        r = 0;
-//                        green = 255;
-//                        b = 0;
-//                    }
-//
-//                    if (newField.get(i).get(j).getHp() > 0 && newField.get(i).get(j).getHp() <= 50) {
-//                        r = 0;
-//                        green = 70;
-//                        b = 0;
-//                    }
-
-                    if (newField.get(i).get(j).getId().equals(ID.Ground)) {
-                        r = 0;
-                        green = 70;
-                        b = 0;
-                    }
-                    else if (newField.get(i).get(j).getId().equals(ID.Ally)) {
-                        r = 255;
-                        green = 255;
-                        b = 255;
-                    }
+                g.setColor(new Color(red, green, blue));
+                g.fillRect(rectSize * j + 8, rectSize * i + 30, rectSize, rectSize);
+                g.setColor(Color.BLACK);
+                g.drawRect(rectSize * j + 8, rectSize * i + 30, rectSize, rectSize);
 
 
 
+                if(newField.get(i).get(j).getId() != ID.Ground){
+                    int[] rgb = object.objectHpColor(newField.get(i).get(j));
+                    red = rgb[0];
+                    green = rgb[1];
+                    blue = rgb[2];
 
-                    g.setColor(new Color(r, green, b));
-                    g.fillRect(40 * j + 8, 40 * i + 30, 40, 40);
+
+                    int hpBarSize = (int) Math.ceil((rectSize-10)*newField.get(i).get(j).getHp()/100);
+                    System.out.println(hpBarSize);
+//                    System.out.println(newField.get(0).get(1).getHp());
+
+//                    (int) Math.ceil((rectSize - 10)*hpBar)
+
+                    g.setColor(new Color(255,255,255));
+                    g.fillRect(rectSize * j + 8 + 5, rectSize * i + 30 + 5, rectSize - 10, 5);
+                    g.setColor(new Color(red, green, blue));
+                    g.fillRect(rectSize * j + 8 + 5, rectSize * i + 30 + 5, hpBarSize, 5);
                     g.setColor(Color.BLACK);
-                    g.drawRect(40 * j + 8, 40 * i + 30, 40, 40);
-
+                    g.drawRect(rectSize * j + 8 + 5, rectSize * i + 30 + 5, rectSize - 10, 5);
                 }
             }
-
         }
+
+    }
+
+
 }

@@ -8,8 +8,8 @@ public class Game {
     public static void main(String[] args) throws InterruptedException {
         View view = new View();
         view.setEmptyField(view.size);
-        view.setLocation(3200,400);
-        view.setSize(600,600);
+        view.setLocation(10,50);
+        view.setSize(450,450);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Action action = new Action();
         GameObject gameObject = new GameObject();
@@ -39,6 +39,11 @@ public class Game {
             view.setVisible(true);
             view.repaint();
             view.printNumbers();
+            System.out.println(view.newField.get(0).get(1).getHp());
+            if(x==2){
+                view.newField.get(0).get(1).setHp(30);
+                view.newField.get(1).get(1).setHp(40);
+            }
 //            for (int i = 0; i < list.size(); i++) {
 //                System.out.println(list.get(i).getId());
 //            }
