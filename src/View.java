@@ -60,30 +60,32 @@ public class View extends JFrame {
         super.paint(g);
 
         int rectSize = 40;
-        int red = 255, green = 255, blue = 255;
+//        int red = 255, green = 255, blue = 255;
+
+        GameObject object = new GameObject();
 
         for (int i = 0; i < newField.size(); i++) {
             for (int j = 0; j < newField.size(); j++) {
 
 //                    System.out.println("i = " + i + " j = " + j + " ID = " + newField.get(i).get(j).getId());
 
-                GameObject object = new GameObject();
-
-                if (newField.get(i).get(j).getId() == ID.Ground) {
-                    red = 0;
-                    green = 70;
-                    blue = 0;
-                }
-
-                if (newField.get(i).get(j).getId() == ID.Ally) {
-                    int[] rgb = object.objectColor(newField.get(i).get(j));
-                    red = rgb[0];
-                    green = rgb[1];
-                    blue = rgb[2];
-                }
 
 
-                g.setColor(new Color(red, green, blue));
+//                if (newField.get(i).get(j).getId() == ID.Ground) {
+//                    red = 0;
+//                    green = 70;
+//                    blue = 0;
+//                }
+//
+//                if (newField.get(i).get(j).getId() == ID.Ally) {
+//                    int[] rgb = object.objectColor(newField.get(i).get(j));
+//                    red = rgb[0];
+//                    green = rgb[1];
+//                    blue = rgb[2];
+//                }
+
+
+                g.setColor(object.objectColor(newField.get(i).get(j)));
                 g.fillRect(rectSize * j + 8, rectSize * i + 30, rectSize, rectSize);
                 g.setColor(Color.BLACK);
                 g.drawRect(rectSize * j + 8, rectSize * i + 30, rectSize, rectSize);
@@ -91,10 +93,10 @@ public class View extends JFrame {
 
 
                 if(newField.get(i).get(j).getId() != ID.Ground){
-                    int[] rgb = object.objectHpColor(newField.get(i).get(j));
-                    red = rgb[0];
-                    green = rgb[1];
-                    blue = rgb[2];
+//                    int[] rgb = object.objectHpColor(newField.get(i).get(j));
+//                    red = rgb[0];
+//                    green = rgb[1];
+//                    blue = rgb[2];
 
 
                     int hpBarSize = (int) Math.ceil((rectSize-10)*newField.get(i).get(j).getHp()/100);
@@ -103,9 +105,9 @@ public class View extends JFrame {
 
 //                    (int) Math.ceil((rectSize - 10)*hpBar)
 
-                    g.setColor(new Color(255,255,255));
+                    g.setColor(new Color(255, 255, 255));
                     g.fillRect(rectSize * j + 8 + 5, rectSize * i + 30 + 5, rectSize - 10, 5);
-                    g.setColor(new Color(red, green, blue));
+                    g.setColor(object.objectHpColor(newField.get(i).get(j)));
                     g.fillRect(rectSize * j + 8 + 5, rectSize * i + 30 + 5, hpBarSize, 5);
                     g.setColor(Color.BLACK);
                     g.drawRect(rectSize * j + 8 + 5, rectSize * i + 30 + 5, rectSize - 10, 5);
@@ -117,3 +119,4 @@ public class View extends JFrame {
 
 
 }
+

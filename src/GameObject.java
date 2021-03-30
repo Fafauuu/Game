@@ -61,44 +61,32 @@ public class GameObject {
         return warriors;
     }
 
-    public int[] objectColor(GameObject object) {
+    public Color objectColor(GameObject object) {
 
-        int r = 0, g = 0, b = 0;
+        Color objectColors = new Color(255,255,255);
 
         if (object.getId() == ID.Ground) {
-            r=0;
-            g=70;
-            b=0;
+            objectColors = new Color(147, 113, 97);
         }
 
         if(object.getId() == ID.Ally){
-            r=140;
-            g=0;
-            b=0;
+            objectColors = new Color(29, 57, 224);
         }
-
-        int[] objectColors = {r,g,b};
 
         return objectColors;
     }
 
-    public int[] objectHpColor(GameObject object) {
+    public Color objectHpColor(GameObject object) {
 
-        int r = 0, g = 0, b = 0;
+        Color objectHpColors = new Color(255,255,255);
 
         if (object.getHp() > 50 && object.getHp() <= 100) {
-            r=0;
-            g=255;
-            b=0;
+            objectHpColors = new Color(48, 226, 14);
         }
 
         if(object.getHp()>0 && object.getHp()<=50){
-            r=140;
-            g=0;
-            b=0;
+            objectHpColors = new Color(215, 11, 11);
         }
-
-        int[] objectHpColors = {r,g,b};
 
         return objectHpColors;
     }

@@ -35,15 +35,17 @@ public class Game {
         for (int x = 0; x < 10; x++) {
             System.out.println(view.newField.size());
             System.out.println(view.newField.get(x).size());
+
+            if(x==2){
+                view.newField.get(0).get(1).setHp(30);
+                view.newField.get(1).get(1).setHp(40);
+            }
             Thread.sleep(1000);
             view.setVisible(true);
             view.repaint();
             view.printNumbers();
             System.out.println(view.newField.get(0).get(1).getHp());
-            if(x==2){
-                view.newField.get(0).get(1).setHp(30);
-                view.newField.get(1).get(1).setHp(40);
-            }
+
 //            for (int i = 0; i < list.size(); i++) {
 //                System.out.println(list.get(i).getId());
 //            }
