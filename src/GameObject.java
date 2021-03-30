@@ -66,7 +66,7 @@ public class GameObject {
         Color objectColors = new Color(255,255,255);
 
         if (object.getId() == ID.Ground) {
-            objectColors = new Color(147, 113, 97);
+            objectColors = new Color(89, 113, 67);
         }
 
         if(object.getId() == ID.Ally){
