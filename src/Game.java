@@ -8,43 +8,39 @@ public class Game {
     public static void main(String[] args) throws InterruptedException {
         View view = new View();
         view.setEmptyField(view.size);
-        view.setLocation(10,50);
-        view.setSize(450,450);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Action action = new Action();
         GameObject gameObject = new GameObject();
+        Action action = new Action();
 //        view.printNumbers();
 
 
 
-        ArrayList<GameObject> list= new ArrayList<>();
+        ArrayList<GameObject> list;
         list = gameObject.createObjects(6,0,0);
+
         for (int i = 0; i < list.size(); i++) {
-            view.newField.get(0).set(i, list.get(i));
+            view.field.get(0).set(i, list.get(i));
         }
 
 
-
 //        action.placeWarriors(list);
-//        action.placeWarriors(warrior.createArchers(4));
-//        action.placeWarriors(warrior.createKnights(8));
-//        action.placeWarriors(warrior.createArchers(3));
 
-//        action.placeWarriors(warrior1);
+//        view.field.get(0).addAll(list);
 
-        for (int x = 0; x < 10; x++) {
-            System.out.println(view.newField.size());
-            System.out.println(view.newField.get(x).size());
-
-            if(x==2){
-                view.newField.get(0).get(1).setHp(30);
-                view.newField.get(1).get(1).setHp(40);
-            }
+        for (int x = 0, i = 9; x < 10; x++) {
+//            System.out.println(view.newField.size());
+//            System.out.println(view.newField.get(x).size());
             Thread.sleep(1000);
             view.setVisible(true);
             view.repaint();
             view.printNumbers();
-            System.out.println(view.newField.get(0).get(1).getHp());
+
+
+//            System.out.println(view.newField.get(0).get(1).getHp());
+
+
+            view.field.get(0).get(1).setHp(10*i--);
+
 
 //            for (int i = 0; i < list.size(); i++) {
 //                System.out.println(list.get(i).getId());

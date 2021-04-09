@@ -70,7 +70,7 @@ public class GameObject {
         }
 
         if(object.getId() == ID.Ally){
-            objectColors = new Color(29, 57, 224);
+            objectColors = new Color(207, 255, 74);
         }
 
         return objectColors;
@@ -78,13 +78,18 @@ public class GameObject {
 
     public Color objectHpColor(GameObject object) {
 
-        Color objectHpColors = new Color(255,255,255);
+        Color objectHpColors = new Color(255, 255, 255);
 
-        if (object.getHp() > 50 && object.getHp() <= 100) {
+        if (object.getHp() > 75 && object.getHp() <= 100) {
             objectHpColors = new Color(48, 226, 14);
         }
-
-        if(object.getHp()>0 && object.getHp()<=50){
+        if (object.getHp() > 50 && object.getHp() <= 75) {
+            objectHpColors = new Color(250, 225, 0);
+        }
+        if (object.getHp() > 25 && object.getHp() <= 50) {
+            objectHpColors = new Color(250, 113, 4);
+        }
+        if (object.getHp() > 0 && object.getHp() <= 25) {
             objectHpColors = new Color(215, 11, 11);
         }
 
