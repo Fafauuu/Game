@@ -1,16 +1,13 @@
 package simulation;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.nio.Buffer;
 import java.util.ArrayList;
 
 
 public class View extends JFrame {
-
 
 
     public static int size = 0;
@@ -35,8 +32,8 @@ public class View extends JFrame {
                 field.get(i).add(j, ground);
             }
         }
-        setLocation(10,50);
-        setSize(900,900);
+        setLocation(10, 50);
+        setSize(900, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
@@ -61,18 +58,20 @@ public class View extends JFrame {
     }
 
 
+    int rectSize = 60;
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        BufferedImage image = null;
-
-        try{
-            image = ImageIO.read(new File("sword.png"));
-        }catch (IOException ex){
-            System.out.println("\nreading image issue\n");
-            ex.printStackTrace();
-        }
+//        BufferedImage image = null;
+//
+//        try{
+//            image = ImageIO.read(new File("src/icons/sword.png"));
+//        }catch (IOException ex){
+//            System.out.println("\nreading image issue\n");
+//            ex.printStackTrace();
+//        }
 
 //        try {
 //            URL url = new URL("resources\\sword.png");
@@ -82,7 +81,7 @@ public class View extends JFrame {
 //        }
 
 
-        int rectSize = 60;
+
 
 
         GameObject object = new GameObject();
@@ -96,15 +95,14 @@ public class View extends JFrame {
                 g.drawRect(rectSize * j + 8, rectSize * i + 30, rectSize, rectSize);
 
 
-                if(field.get(i).get(j).getId() == ID.Ally) {
-                    g.drawImage(image, rectSize * j + 8, rectSize * i + 30, rectSize, rectSize,this);
+                if (field.get(i).get(j).getId() != ID.Ground) {
+                    g.drawImage(object.objectIcon(field.get(i).get(j)), rectSize * j + 8, rectSize * i + 30, rectSize, rectSize, this);
                 }
 
 
+                if (field.get(i).get(j).getId() != ID.Ground) {
 
-                if(field.get(i).get(j).getId() != ID.Ground){
-
-                    int hpBarSize = (int) Math.ceil((rectSize-10)*field.get(i).get(j).getHp()/100);
+                    int hpBarSize = (int) Math.ceil((rectSize - 10) * field.get(i).get(j).getHp() / 100);
 
                     g.setColor(new Color(255, 255, 255));
                     g.fillRect(rectSize * j + 8 + 5, rectSize * i + 30 + 5, rectSize - 10, 5);
@@ -118,5 +116,14 @@ public class View extends JFrame {
 
     }
 
+    public void repaintField(){
+        for (int i = 0; i < field.size(); i++) {
+            for (int j = 0; j < field.size(); j++) {
+                if(field.get(i).get(j).getId() != ID.Ground){
+                    repaint(rectSize * j + 8, rectSize * i + 30, rectSize, rectSize);
+                }
+            }
+        }
+    }
 
 }

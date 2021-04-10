@@ -1,7 +1,10 @@
 package simulation;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GameObject {
 
@@ -27,16 +30,8 @@ public class GameObject {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public int getHp() {
@@ -51,51 +46,83 @@ public class GameObject {
         return id;
     }
 
-    public void setId(ID id) {
-        this.id = id;
-    }
+//    public ArrayList<GameObject> createObjects(int startingX, int finalX, int startingY, int finalY){
+//        int rowNumber = finalX-startingX+1;
+//        int columnNumber = finalY-startingY+1;
+//        int number = rowNumber*columnNumber;
+//
+//        ArrayList<GameObject> warriors = new ArrayList<>(number);
+////            for (int i = 0, x = startingX, y = startingY; i < number; i++, y++) {
+////                warriors.add(new GameObject(x, y, ID.Ally));
+////            }
+//
+//        for (int x = startingX; x <= finalX; x++) {
+//            for (int y = startingY; y <= finalY; y++) {
+//                warriors.add(new GameObject(x, y, ID.Ally));
+//            }
+//        }
+//
+//        return warriors;
+//    }
 
-    public ArrayList<GameObject> createObjects(int number, int startingX, int startingY){
-        ArrayList<GameObject> warriors = new ArrayList<>(number);
-        for (int i = 0, x = startingX, y = startingY; i < number; i++, y++) {
-            warriors.add(new GameObject(x, y, ID.Ally));
+    public BufferedImage objectIcon(GameObject object){
+        BufferedImage image = null;
+        String fileName = new String();
+
+        if (object instanceof Knight){
+            fileName = "sword";
         }
-        return warriors;
+        if (object instanceof AxeMan){
+            fileName = "axe";
+        }
+
+
+        try{
+            image = ImageIO.read(new File("src/icons/" + fileName + ".png"));
+        }catch (IOException ex){
+            System.out.println("\nreading image issue\n");
+            ex.printStackTrace();
+        }
+        return image;
     }
 
     public Color objectColor(GameObject object) {
 
-        Color objectColors = new Color(255,255,255);
+        Color objectColor = new Color(255,255,255);
 
         if (object.getId() == ID.Ground) {
-            objectColors = new Color(89, 113, 67);
+            objectColor = new Color(89, 113, 67);
         }
 
         if(object.getId() == ID.Ally){
-            objectColors = new Color(207, 255, 74);
+            objectColor = new Color(207, 255, 74);
         }
 
-        return objectColors;
+        if(object.getId() == ID.Enemy){
+            objectColor = new Color(255, 31, 64);
+        }
+
+        return objectColor;
     }
 
     public Color objectHpColor(GameObject object) {
 
-        Color objectHpColors = new Color(255, 255, 255);
+        Color objectHpColor = new Color(255, 255, 255);
 
         if (object.getHp() > 75 && object.getHp() <= 100) {
-            objectHpColors = new Color(48, 226, 14);
+            objectHpColor = new Color(48, 226, 14);
         }
         if (object.getHp() > 50 && object.getHp() <= 75) {
-            objectHpColors = new Color(250, 225, 0);
+            objectHpColor = new Color(250, 225, 0);
         }
         if (object.getHp() > 25 && object.getHp() <= 50) {
-            objectHpColors = new Color(250, 113, 4);
+            objectHpColor = new Color(250, 113, 4);
         }
         if (object.getHp() > 0 && object.getHp() <= 25) {
-            objectHpColors = new Color(215, 11, 11);
+            objectHpColor = new Color(215, 11, 11);
         }
 
-        return objectHpColors;
+        return objectHpColor;
     }
 }
 

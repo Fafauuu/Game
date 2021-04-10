@@ -3,13 +3,13 @@ package simulation;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Knight extends GameObject {
+public class AxeMan extends GameObject {
 
-    public Knight(int x, int y, ID id) {
+    public AxeMan(int x, int y, ID id) {
         super(x, y, id);
     }
 
-    public Knight(){}
+    public AxeMan(){}
 
     public ArrayList<GameObject> createAllyObjects(int startingX, int finalX, int startingY, int finalY) {
         int rowNumber = finalX - startingX + 1;
@@ -20,7 +20,7 @@ public class Knight extends GameObject {
 
         for (int x = startingX; x <= finalX; x++) {
             for (int y = startingY; y <= finalY; y++) {
-                warriors.add(new Knight(x, y, ID.Ally));
+                warriors.add(new AxeMan(x, y, ID.Ally));
             }
         }
         return warriors;
@@ -38,7 +38,7 @@ public class Knight extends GameObject {
 
         for (int x = startingX; x <= finalX; x++) {
             for (int y = startingY; y <= finalY; y++) {
-                warriors.add(new Knight(x, y, ID.Enemy));
+                warriors.add(new AxeMan(x, y, ID.Enemy));
             }
         }
         return warriors;
