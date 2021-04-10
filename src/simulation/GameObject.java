@@ -1,3 +1,5 @@
+package simulation;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -55,8 +57,8 @@ public class GameObject {
 
     public ArrayList<GameObject> createObjects(int number, int startingX, int startingY){
         ArrayList<GameObject> warriors = new ArrayList<>(number);
-        for (int i = 0; i < number; i++) {
-            warriors.add(new GameObject(startingX, startingY, ID.Ally));
+        for (int i = 0, x = startingX, y = startingY; i < number; i++, y++) {
+            warriors.add(new GameObject(x, y, ID.Ally));
         }
         return warriors;
     }

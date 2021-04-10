@@ -4,8 +4,8 @@
 //
 //    public static void main(String[] args) {
 //
-////        GameObject object = new GameObject();
-////        ArrayList<GameObject> list = new ArrayList<>();
+////        simulation.GameObject object = new simulation.GameObject();
+////        ArrayList<simulation.GameObject> list = new ArrayList<>();
 ////        list = object.createObjects(3,0,0);
 ////
 ////        for (int i = 0; i < 3; i++) {

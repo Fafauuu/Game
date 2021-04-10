@@ -1,3 +1,5 @@
+package simulation;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +11,18 @@ import java.util.ArrayList;
 
 public class View extends JFrame {
 
-    public static int size = 10;
+
+
+    public static int size = 0;
+
+    public static void setSize(int size) {
+        View.size = size;
+    }
 
     ArrayList<ArrayList<GameObject>> field = new ArrayList<>(size);
 
-    public void setEmptyField(int size) {
+
+    public void setEmptyField() {
 
         for (int i = 0; i < size; i++) {
             field.add(new ArrayList<>(size));
@@ -28,6 +37,7 @@ public class View extends JFrame {
         }
         setLocation(10,50);
         setSize(900,900);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 
@@ -58,10 +68,18 @@ public class View extends JFrame {
         BufferedImage image = null;
 
         try{
-            image = ImageIO.read(new File("D:\\Programowanie\\IntelliJProjects\\Game\\icons\\sword.png"));
+            image = ImageIO.read(new File("sword.png"));
         }catch (IOException ex){
-            System.out.println("reading image issue\n");
+            System.out.println("\nreading image issue\n");
+            ex.printStackTrace();
         }
+
+//        try {
+//            URL url = new URL("resources\\sword.png");
+//            image = ImageIO.read(url);
+//        } catch (IOException e) {
+//            System.out.println("\nreading image issue\n");
+//        }
 
 
         int rectSize = 60;
