@@ -15,11 +15,11 @@ public class Game {
 
         ArrayList<GameObject> list = new ArrayList<>();
 
-        list.addAll(knight.createAllyObjects(0,3,1,6));
-        list.addAll(axeMan.createAllyObjects(0,3,7,9));
+        list.addAll(knight.createAllyObjects(1,1,1,6));
+        list.addAll(axeMan.createAllyObjects(1,1,7,8));
 
-        list.addAll(knight.createEnemyObjects(6,8,0,4));
-        list.addAll(axeMan.createEnemyObjects(6,8,6,8));
+        list.addAll(knight.createEnemyObjects(6,6,0,4));
+        list.addAll(axeMan.createEnemyObjects(6,6,6,8));
 
         action.setList(view.getField());
         action.printField();
@@ -27,12 +27,24 @@ public class Game {
 
         view.setVisible(true);
 
-        for (int x = 0, i = 9; x < 10; x++) {
-            Thread.sleep(2000);
+        for (int x = 0, i = 9; x < 11; x++) {
+            Thread.sleep(1000);
+            action.removeDeadWarriors();
             view.revalidate();
             view.repaint();
 //            view.printNumbers();
-
+            if(x == 2){
+                action.move(view.field.get(1).get(2), "up");
+            }
+            if(x == 4){
+                action.move(view.field.get(0).get(2), "up");
+            }
+            if(x == 6){
+                action.move(view.field.get(0).get(2), "down");
+            }
+            if(x == 8){
+                action.move(view.field.get(1).get(8), "right");
+            }
 
             view.field.get(1).get(1).setHp(10 * i--);
 
