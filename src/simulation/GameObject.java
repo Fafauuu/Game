@@ -11,6 +11,7 @@ public class GameObject {
     private int x, y;
     private int hp;
     private ID id;
+    private Status status = Status.notMoved;
 
     public GameObject(int x, int y, ID id) {
         this.x = x;
@@ -54,6 +55,11 @@ public class GameObject {
         return id;
     }
 
+    public Status getStatus() { return status; }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 //    public ArrayList<GameObject> createObjects(int startingX, int finalX, int startingY, int finalY){
 //        int rowNumber = finalX-startingX+1;
 //        int columnNumber = finalY-startingY+1;
