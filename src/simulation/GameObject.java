@@ -11,7 +11,7 @@ public class GameObject {
     private int x, y;
     private int hp;
     private ID id;
-    private Status status;
+    private Status status = Status.NotMoved;
 
     public GameObject(int x, int y, ID id) {
         this.x = x;

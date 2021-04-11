@@ -15,10 +15,10 @@ public class Game {
 
         ArrayList<GameObject> list = new ArrayList<>(0);
 
-        list.addAll(knight.createAllyObjects(0, 2, 0, 1));
-        list.addAll(axeMan.createAllyObjects(0, 2, 4, 7));
-        list.addAll(knight.createEnemyObjects(8, 9, 0, 1));
-        list.addAll(axeMan.createEnemyObjects(7, 8, 6, 9));
+        list.addAll(knight.createAllyObjects(0, 1, 0, 2));
+        list.addAll(axeMan.createAllyObjects(0, 1, 4, 7));
+        list.addAll(knight.createEnemyObjects(7, 7, 0, 1));
+        list.addAll(axeMan.createEnemyObjects(7, 7, 6, 9));
 
         action.setList(view.getField());
         action.printField();
@@ -27,7 +27,7 @@ public class Game {
         view.setVisible(true);
 
         for (int x = 0, i = 9; x < 100; x++) {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
 
 
             action.scanForEnemy(list, x);

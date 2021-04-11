@@ -67,7 +67,11 @@ public class Action {
                 board.get(warrior.getX()).set(warrior.getY(), new GameObject(ID.Ground, Status.Ground));
                 warrior.setX(targetX);
                 warrior.setY(targetY);
-                warrior.setStatus(Status.Moved);
+//                warrior.setStatus(Status.Moved);
+                if (destination == "up")warrior.setStatus(Status.MovedUp);
+                if (destination == "down")warrior.setStatus(Status.MovedDown);
+                if (destination == "left")warrior.setStatus(Status.MovedLeft);
+                if (destination == "right")warrior.setStatus(Status.MovedRight);
             }
         } else {
             System.out.println("Object moved out of board");
@@ -90,7 +94,7 @@ public class Action {
 
         for (int t = 0; t < board.size(); t++) {
             for (int a = 0; a < warriors.size(); a++) {
-                if (t == 0 || (warriors.get(a).getStatus() == Status.Queued)) {
+                if (t == 0 || (warriors.get(a).getStatus() == Status.NotMoved) || (warriors.get(a).getStatus() == Status.Queued)) {
 
                     boolean allyToMove;
                     if (turn % 2 == 0) {
@@ -110,6 +114,8 @@ public class Action {
                     warriors.get(a).setStatus(Status.NotMoved);
 
 
+
+                    // Scan for the closest enemy
                     for (int i = 0; i < warriors.size(); i++) {
                         if (i != a) {
                             if (warriors.get(i).getId() == opponentId) {
@@ -132,18 +138,20 @@ public class Action {
                         }
                     }
 
+
+                    // Close range attack
                     if (minDistance == 1) {
                         for (int i = 0; i < warriors.size(); i++) {
                             if (warriors.get(i).getX() == targetX && (warriors.get(i).getY() == targetY)) {
-                                if (board.get(x).get(y).getId() != ID.Ground) {
                                     attack(warriors.get(i), turn);
                                     warriors.get(a).setStatus(Status.Attacked);
-                                }
                             }
                         }
-                    } else warriors.get(a).setStatus(Status.NotMoved);
-                    if (warriors.get(a).getStatus() != Status.Attacked) {
-                        if ((warriors.get(a).getId() == ID.Ally && allyToMove) || warriors.get(a).getId() == ID.Enemy && !allyToMove)
+                    }
+
+                    // Moving towards closest an enemy and charge attack
+                    if (minDistance > 1 && minDistance <=2 && warriors.get(a).getStatus() != Status.Attacked){
+                        if ((warriors.get(a).getId() == ID.Ally && allyToMove) || warriors.get(a).getId() == ID.Enemy && !allyToMove) {
                             if (Math.abs(targetX - x) >= Math.abs(targetY - y)) {
                                 if (targetX - x > 0) move(warriors.get(a), "down");
                                 if (targetX - x < 0) move(warriors.get(a), "up");
@@ -151,9 +159,31 @@ public class Action {
                                 if (targetY - y > 0) move(warriors.get(a), "right");
                                 if (targetY - y < 0) move(warriors.get(a), "left");
                             }
+                        }
 
-                        removeDeadWarriors(warriors);
+                        for (int i = 0; i < warriors.size(); i++) {
+                            if (warriors.get(i).getX() == targetX && (warriors.get(i).getY() == targetY)) {
+                                attack(warriors.get(i), turn);
+                                warriors.get(a).setStatus(Status.Attacked);
+                            }
+                        }
+
+
                     }
+
+                    // Moving towards closest an enemy
+                    if (warriors.get(a).getStatus() != Status.Attacked) {
+                        if ((warriors.get(a).getId() == ID.Ally && allyToMove) || warriors.get(a).getId() == ID.Enemy && !allyToMove) {
+                            if (Math.abs(targetX - x) >= Math.abs(targetY - y)) {
+                                if (targetX - x > 0) move(warriors.get(a), "down");
+                                if (targetX - x < 0) move(warriors.get(a), "up");
+                            } else {
+                                if (targetY - y > 0) move(warriors.get(a), "right");
+                                if (targetY - y < 0) move(warriors.get(a), "left");
+                            }
+                        }
+                    }
+                    removeDeadWarriors(warriors);
                 }
             }
         }
