@@ -26,14 +26,25 @@ public class Action {
         }
     }
 
-    public void removeDeadWarriors() {
-        for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < board.size(); j++) {
-                if (board.get(i).get(j).getHp() == 0) {
-                    board.get(i).set(j, new GameObject(ID.Ground));
-                }
-            }
+//    public void removeDeadWarriors() {
+//        for (int i = 0; i < board.size(); i++) {
+//            for (int j = 0; j < board.size(); j++) {
+//                if (board.get(i).get(j).getHp() == 0) {
+//                    board.get(i).set(j, new GameObject(ID.Ground));
+//                }
+//            }
+//
+//        }
+//    }
 
+    public void removeDeadWarriors(ArrayList <GameObject> warriors) {
+        for (int i = 0; i < warriors.size(); i++) {
+            if (warriors.get(i).getHp() <= 0){
+                int x = warriors.get(i).getX();
+                int y = warriors.get(i).getY();
+                board.get(x).set(y, new GameObject(ID.Ground));
+                warriors.get(i).setStatus(Status.Dead);
+            }
         }
     }
 
@@ -61,81 +72,100 @@ public class Action {
                 board.get(warrior.getX()).set(warrior.getY(), new GameObject(ID.Ground));
                 warrior.setX(targetX);
                 warrior.setY(targetY);
+                warrior.setStatus(Status.Moved);
             } else {
                 System.out.println("Can't stack objects");
+                warrior.setStatus(Status.notMoved);
             }
         } else {
             System.out.println("Object moved out of board");
+            warrior.setStatus(Status.notMoved);
         }
     }
 
-    public void scanForEnemy(GameObject warrior) {
-        double minDistance = 0;
-        double distance;
-        int x = warrior.getX();
-        int y = warrior.getY();
-        int targetX = x;
-        int targetY = y;
+    public void attack(GameObject attackedWarrior, int turn){
 
-        if (warrior.getId() == ID.Ally) {
-            for (int i = 0; i < board.size(); i++) {
-                for (int j = 0; j < board.size(); j++) {
-                    if (board.get(i).get(j).getId() == ID.Enemy) {
-                        if (minDistance == 0) {
-                            minDistance = Math.sqrt((board.get(i).get(j).getX() - x) * (board.get(i).get(j).getX() - x)
-                                    + (board.get(i).get(j).getY() - y) * (board.get(i).get(j).getX() - y));
-                            targetX = board.get(i).get(j).getX();
-                            targetY = board.get(i).get(j).getY();
-                        }
-                        if (minDistance != 0) {
-                            distance = Math.sqrt((board.get(i).get(j).getX() - x) * (board.get(i).get(j).getX() - x)
-                                    + (board.get(i).get(j).getY() - y) * (board.get(i).get(j).getX() - y));
-                            if (distance < minDistance) {
-                                minDistance = distance;
-                                targetX = board.get(i).get(j).getX();
-                                targetY = board.get(i).get(j).getY();
+        boolean allyToMove;
+        if(turn % 2 == 0){
+            allyToMove = true;
+        }else allyToMove = false;
+
+        if ((attackedWarrior.getId() == ID.Ally && !allyToMove) || (attackedWarrior.getId() == ID.Enemy && allyToMove))
+        attackedWarrior.setHp(attackedWarrior.getHp()-25);
+    }
+
+    public void scanForEnemy(ArrayList<GameObject> warriors, int turn) {
+
+        for (int a = 0; a < warriors.size(); a++) {
+
+            boolean allyToMove;
+            if(turn % 2 == 0){
+                allyToMove = true;
+            }else allyToMove = false;
+
+            double minDistance = 0;
+            double distance;
+            int x = warriors.get(a).getX();
+            int y = warriors.get(a).getY();
+            int targetX = x;
+            int targetY = y;
+            ID id = warriors.get(a).getId();
+            ID opponentId = ID.Ally;
+            if(id == ID.Ally) opponentId = ID.Enemy;
+            if(id == ID.Enemy) opponentId = ID.Ally;
+            warriors.get(a).setStatus(Status.notMoved);
+
+
+                for (int i = 0; i < warriors.size(); i++) {
+                    if (i != a) {
+                        if (warriors.get(i).getId() == opponentId && warriors.get(i).getStatus() != Status.Dead) {
+                            if (minDistance == 0) {
+                                minDistance = Math.sqrt((warriors.get(i).getX() - x) * (warriors.get(i).getX() - x)
+                                        + (warriors.get(i).getY() - y) * (warriors.get(i).getY() - y));
+                                targetX = warriors.get(i).getX();
+                                targetY = warriors.get(i).getY();
+                            }
+                            if(minDistance != 0){
+                                distance = Math.sqrt((warriors.get(i).getX() - x) * (warriors.get(i).getX() - x)
+                                        + (warriors.get(i).getY() - y) * (warriors.get(i).getY() - y));
+                                if (distance < minDistance){
+                                    minDistance = distance;
+                                    targetX = warriors.get(i).getX();
+                                    targetY = warriors.get(i).getY();
+                                }
                             }
                         }
                     }
                 }
-            }
-        }
 
-        if (warrior.getId() == ID.Enemy) {
-            for (int i = 0; i < board.size(); i++) {
-                for (int j = 0; j < board.size(); j++) {
-                    if (board.get(i).get(j).getId() == ID.Ally) {
-                        if (minDistance == 0) {
-                            minDistance = Math.sqrt((board.get(i).get(j).getX() - x) * (board.get(i).get(j).getX() - x)
-                                    + (board.get(i).get(j).getY() - y) * (board.get(i).get(j).getX() - y));
-                            targetX = board.get(i).get(j).getX();
-                            targetY = board.get(i).get(j).getY();
-                        }
-                        if (minDistance != 0) {
-                            distance = Math.sqrt((board.get(i).get(j).getX() - x) * (board.get(i).get(j).getX() - x)
-                                    + (board.get(i).get(j).getY() - y) * (board.get(i).get(j).getX() - y));
-                            if (distance < minDistance) {
-                                minDistance = distance;
-                                targetX = board.get(i).get(j).getX();
-                                targetY = board.get(i).get(j).getY();
-                            }
+            if (minDistance == 1){
+                for (int i = 0; i < warriors.size(); i++) {
+                    if (warriors.get(i).getX() == targetX && (warriors.get(i).getY() == targetY)){
+                        if(board.get(x).get(y).getId() != ID.Ground){
+                            attack(warriors.get(i), turn);
+                            warriors.get(a).setStatus(Status.Attacked);
                         }
                     }
                 }
+            }else warriors.get(a).setStatus(Status.notMoved);
+
+//        if (warriors.getStatus() == Status.notMoved) {
+            if (warriors.get(a).getStatus() != Status.Attacked) {
+                if ((warriors.get(a).getId() == ID.Ally && allyToMove) || warriors.get(a).getId() == ID.Enemy && !allyToMove)
+                    if (Math.abs(targetX - x) >= Math.abs(targetY - y)) {
+                        if (targetX - x > 0) move(warriors.get(a), "down");
+                        if (targetX - x < 0) move(warriors.get(a), "up");
+                    } else {
+                        if (targetY - y > 0) move(warriors.get(a), "right");
+                        if (targetY - y < 0) move(warriors.get(a), "left");
+                    }
+//            warriors.get(a).setStatus(Status.Moved);
+//        }else warriors.setStatus(Status.notMoved);
+
+                removeDeadWarriors(warriors);
             }
+            minDistance = 0;
         }
-
-//        if (warrior.getStatus() == Status.notMoved) {
-            if (Math.abs(targetX - x) >= Math.abs(targetY - y)) {
-                if (targetX - x > 0) move(warrior, "down");
-                if (targetX - x < 0) move(warrior, "up");
-            } else {
-                if (targetY - y > 0) move(warrior, "right");
-                if (targetY - y < 0) move(warrior, "left");
-            }
-            warrior.setStatus(Status.Moved);
-//        }else warrior.setStatus(Status.notMoved);
     }
-
 
 }

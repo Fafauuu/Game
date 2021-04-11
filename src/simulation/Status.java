@@ -3,6 +3,8 @@ package simulation;
 public enum Status {
 
     Moved(),
-    notMoved()
+    notMoved(),
+    Attacked(),
+    Dead()
 
 }

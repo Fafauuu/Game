@@ -55,6 +55,15 @@ public class View extends JFrame {
             System.out.println();
         }
         System.out.println();
+
+        for (int i = 0; i < field.size(); i++) {
+            for (int j = 0; j < field.get(i).size(); j++) {
+                System.out.print(field.get(i).get(j).getStatus());
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
 
@@ -63,26 +72,6 @@ public class View extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-
-//        BufferedImage image = null;
-//
-//        try{
-//            image = ImageIO.read(new File("src/icons/sword.png"));
-//        }catch (IOException ex){
-//            System.out.println("\nreading image issue\n");
-//            ex.printStackTrace();
-//        }
-
-//        try {
-//            URL url = new URL("resources\\sword.png");
-//            image = ImageIO.read(url);
-//        } catch (IOException e) {
-//            System.out.println("\nreading image issue\n");
-//        }
-
-
-
-
 
         GameObject object = new GameObject();
 
@@ -120,6 +109,9 @@ public class View extends JFrame {
         for (int i = 0; i < field.size(); i++) {
             for (int j = 0; j < field.size(); j++) {
                 if(field.get(i).get(j).getId() != ID.Ground){
+//                    if (){
+//
+//                    }
                     repaint(rectSize * j + 8, rectSize * i + 30, rectSize, rectSize);
                 }
             }

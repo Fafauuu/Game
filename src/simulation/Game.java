@@ -21,9 +21,9 @@ public class Game {
 //        list.addAll(knight.createEnemyObjects(6,7,0,4));
 //        list.addAll(axeMan.createEnemyObjects(6,7,6,8));
 
-        list.addAll(knight.createAllyObjects(1,1,0,0));
-        list.addAll(knight.createEnemyObjects(1,1,9,9));
-        list.addAll(knight.createEnemyObjects(7,7,1,1));
+        list.addAll(knight.createAllyObjects(1,1,1,1));
+        list.addAll(knight.createEnemyObjects(1,1,4,4));
+        list.addAll(knight.createEnemyObjects(7,7,9,9));
 
         action.setList(view.getField());
         action.printField();
@@ -31,49 +31,22 @@ public class Game {
 
         view.setVisible(true);
 
-        for (int x = 0, i = 9; x < 11; x++) {
-            Thread.sleep(3000);
-            action.removeDeadWarriors();
-            view.revalidate();
-            view.repaint();
-//            view.printNumbers();
-//            if(x == 1){
-//                action.move(view.field.get(1).get(2), "up");
-//            }
-//            if(x == 3){
-//                action.move(view.field.get(0).get(2), "up");
-//            }
-//            if(x == 5){
-//                action.move(view.field.get(0).get(2), "down");
-//            }
-//            if(x == 7){
-//                action.move(view.field.get(1).get(8), "right");
-//            }
-//            if(x == 8){
-//                action.move(view.field.get(1).get(7), "left");
-//            }
-//            if(x == 9){
-//                action.move(view.field.get(1).get(8), "left");
-//            }
+        for (int x = 0, i = 9; x < 21; x++) {
+            Thread.sleep(1000);
 
 
-
-//            for (int j = 0; j < view.field.size(); j++) {
-//                for (int k = 0; k < view.field.size(); k++) {
-//                    action.scanForEnemy(view.field.get(j).get(k));
-//                    if(view.field.get(j).get(k).getId() != ID.Ground){
-//                        System.out.print(view.field.get(j).get(k).getId() + " ");
-//                        System.out.println(view.field.get(j).get(k).getStatus());
-//                    }
-//
-//                }
-//            }
+            action.scanForEnemy(list, x);
 
             for (int j = 0; j < list.size(); j++) {
-                action.scanForEnemy(list.get(j));
                 System.out.print(list.get(j).getId() + " ");
                 System.out.println(list.get(j).getStatus());
             }
+
+            action.removeDeadWarriors(list);
+            view.revalidate();
+            view.repaint();
+            view.printNumbers();
+
 
 
 //            System.out.println(view.field.get(1).get(1).getStatus());
