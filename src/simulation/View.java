@@ -2,8 +2,6 @@ package simulation;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import java.util.ArrayList;
 
 
@@ -25,7 +23,7 @@ public class View extends JFrame {
             field.add(new ArrayList<>(size));
         }
 
-        GameObject ground = new GameObject(ID.Ground);
+        GameObject ground = new GameObject(ID.Ground, Status.Ground);
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -105,13 +103,10 @@ public class View extends JFrame {
 
     }
 
-    public void repaintField(){
+    public void repaintField() {
         for (int i = 0; i < field.size(); i++) {
             for (int j = 0; j < field.size(); j++) {
-                if(field.get(i).get(j).getId() != ID.Ground){
-//                    if (){
-//
-//                    }
+                if (field.get(i).get(j).getId() != ID.Ground) {
                     repaint(rectSize * j + 8, rectSize * i + 30, rectSize, rectSize);
                 }
             }

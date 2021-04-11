@@ -15,15 +15,10 @@ public class Game {
 
         ArrayList<GameObject> list = new ArrayList<>(0);
 
-//        list.addAll(knight.createAllyObjects(1,3,1,6));
-//        list.addAll(axeMan.createAllyObjects(1,3,7,8));
-//
-//        list.addAll(knight.createEnemyObjects(6,7,0,4));
-//        list.addAll(axeMan.createEnemyObjects(6,7,6,8));
-
-        list.addAll(knight.createAllyObjects(1,1,1,1));
-        list.addAll(knight.createEnemyObjects(1,1,4,4));
-        list.addAll(knight.createEnemyObjects(7,7,9,9));
+        list.addAll(knight.createAllyObjects(0, 2, 0, 1));
+        list.addAll(axeMan.createAllyObjects(0, 2, 4, 7));
+        list.addAll(knight.createEnemyObjects(8, 9, 0, 1));
+        list.addAll(axeMan.createEnemyObjects(7, 8, 6, 9));
 
         action.setList(view.getField());
         action.printField();
@@ -31,28 +26,17 @@ public class Game {
 
         view.setVisible(true);
 
-        for (int x = 0, i = 9; x < 21; x++) {
-            Thread.sleep(1000);
+        for (int x = 0, i = 9; x < 100; x++) {
+            Thread.sleep(2000);
 
 
             action.scanForEnemy(list, x);
-
-            for (int j = 0; j < list.size(); j++) {
-                System.out.print(list.get(j).getId() + " ");
-                System.out.println(list.get(j).getStatus());
-            }
 
             action.removeDeadWarriors(list);
             view.revalidate();
             view.repaint();
             view.printNumbers();
-
-
-
-//            System.out.println(view.field.get(1).get(1).getStatus());
-//            System.out.println(view.field.get(1).get(2).getStatus());
-
-//            view.field.get(1).get(1).setHp(10 * i--);
+            action.removeDeadWarriors(list);
 
             System.out.println(x);
         }

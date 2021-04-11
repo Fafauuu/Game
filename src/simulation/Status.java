@@ -3,8 +3,9 @@ package simulation;
 public enum Status {
 
     Moved(),
-    notMoved(),
+    NotMoved(),
     Attacked(),
-    Dead()
+    Queued(),
+    Ground()
 
 }

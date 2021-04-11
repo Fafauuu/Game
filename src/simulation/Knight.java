@@ -9,7 +9,8 @@ public class Knight extends GameObject {
         super(x, y, id);
     }
 
-    public Knight(){}
+    public Knight() {
+    }
 
     public ArrayList<GameObject> createAllyObjects(int startingX, int finalX, int startingY, int finalY) {
         int rowNumber = finalX - startingX + 1;
@@ -46,13 +47,13 @@ public class Knight extends GameObject {
 
     public Color objectColor(GameObject object) {
 
-        Color objectColor = new Color(255,255,255);
+        Color objectColor = new Color(255, 255, 255);
 
-        if(object.getId() == ID.Ally){
+        if (object.getId() == ID.Ally) {
             objectColor = new Color(207, 255, 74);
         }
 
-        if(object.getId() == ID.Enemy){
+        if (object.getId() == ID.Enemy) {
             objectColor = new Color(207, 255, 74);
         }
 

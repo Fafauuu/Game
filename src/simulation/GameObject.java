@@ -11,7 +11,7 @@ public class GameObject {
     private int x, y;
     private int hp;
     private ID id;
-    private Status status = Status.notMoved;
+    private Status status;
 
     public GameObject(int x, int y, ID id) {
         this.x = x;
@@ -20,11 +20,13 @@ public class GameObject {
         this.id = id;
     }
 
-    public GameObject(ID id){
+    public GameObject(ID id, Status status) {
         this.id = id;
+        this.status = status;
     }
 
-    public GameObject(){}
+    public GameObject() {
+    }
 
 
     public int getX() {
@@ -55,45 +57,30 @@ public class GameObject {
         return id;
     }
 
-    public Status getStatus() { return status; }
+    public Status getStatus() {
+        return status;
+    }
 
     public void setStatus(Status status) {
         this.status = status;
     }
-//    public ArrayList<GameObject> createObjects(int startingX, int finalX, int startingY, int finalY){
-//        int rowNumber = finalX-startingX+1;
-//        int columnNumber = finalY-startingY+1;
-//        int number = rowNumber*columnNumber;
-//
-//        ArrayList<GameObject> warriors = new ArrayList<>(number);
-////            for (int i = 0, x = startingX, y = startingY; i < number; i++, y++) {
-////                warriors.add(new GameObject(x, y, ID.Ally));
-////            }
-//
-//        for (int x = startingX; x <= finalX; x++) {
-//            for (int y = startingY; y <= finalY; y++) {
-//                warriors.add(new GameObject(x, y, ID.Ally));
-//            }
-//        }
-//
-//        return warriors;
-//    }
 
-    public BufferedImage objectIcon(GameObject object){
+
+    public BufferedImage objectIcon(GameObject object) {
         BufferedImage image = null;
         String fileName = new String();
 
-        if (object instanceof Knight){
+        if (object instanceof Knight) {
             fileName = "sword";
         }
-        if (object instanceof AxeMan){
+        if (object instanceof AxeMan) {
             fileName = "axe";
         }
 
 
-        try{
+        try {
             image = ImageIO.read(new File("src/icons/" + fileName + ".png"));
-        }catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println("\nreading image issue\n");
             ex.printStackTrace();
         }
@@ -102,17 +89,17 @@ public class GameObject {
 
     public Color objectColor(GameObject object) {
 
-        Color objectColor = new Color(255,255,255);
+        Color objectColor = new Color(255, 255, 255);
 
         if (object.getId() == ID.Ground) {
             objectColor = new Color(89, 113, 67);
         }
 
-        if(object.getId() == ID.Ally){
+        if (object.getId() == ID.Ally) {
             objectColor = new Color(207, 255, 74);
         }
 
-        if(object.getId() == ID.Enemy){
+        if (object.getId() == ID.Enemy) {
             objectColor = new Color(255, 31, 64);
         }
 
