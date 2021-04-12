@@ -9,7 +9,6 @@ public enum Status {
     MovedRight(),
     NotMoved(),
     Attacked(),
-    Queued(),
     Ground()
 
 }

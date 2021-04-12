@@ -8,17 +8,32 @@ public class Game {
         View view = new View();
         view.setSize(10);
         view.setEmptyField();
-        GameObject gameObject = new GameObject();
         Knight knight = new Knight();
         AxeMan axeMan = new AxeMan();
         Action action = new Action();
 
         ArrayList<GameObject> list = new ArrayList<>(0);
 
-        list.addAll(knight.createAllyObjects(0, 1, 0, 2));
-        list.addAll(axeMan.createAllyObjects(0, 1, 4, 7));
-        list.addAll(knight.createEnemyObjects(7, 7, 0, 1));
-        list.addAll(axeMan.createEnemyObjects(7, 7, 6, 9));
+
+//        //Example of changing direction to get closer
+//        list.addAll(knight.createAllyObjects(0, 1, 0, 0));
+//        list.addAll(knight.createEnemyObjects(7, 7, 1, 1));
+
+
+//        //Example of charging
+//        list.addAll(knight.createAllyObjects(0,0,0,0));
+//        list.addAll(knight.createAllyObjects(0,0,6,6));
+//        list.addAll(knight.createEnemyObjects(6,6,0,0));
+//        list.addAll(knight.createEnemyObjects(6,6,7,7));
+
+
+//        //Example of some greater battle
+//        list.addAll(knight.createAllyObjects(1,2,0,3));
+//        list.addAll(axeMan.createAllyObjects(0,2,6,8));
+//        list.addAll(axeMan.createEnemyObjects(6,8,1,4));
+//        list.addAll(knight.createEnemyObjects(6,9,7,8));
+
+
 
         action.setList(view.getField());
         action.printField();
@@ -26,9 +41,10 @@ public class Game {
 
         view.setVisible(true);
 
-        for (int x = 0, i = 9; x < 100; x++) {
-            Thread.sleep(1000);
+        for (int x = 0, i = 9; x < 101; x++) {
+            Thread.sleep(1500);
 
+            System.out.println(list.size());
 
             action.scanForEnemy(list, x);
 

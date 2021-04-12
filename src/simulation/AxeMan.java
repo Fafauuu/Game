@@ -1,6 +1,5 @@
 package simulation;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class AxeMan extends GameObject {
@@ -9,7 +8,8 @@ public class AxeMan extends GameObject {
         super(x, y, id);
     }
 
-    public AxeMan(){}
+    public AxeMan() {
+    }
 
     public ArrayList<GameObject> createAllyObjects(int startingX, int finalX, int startingY, int finalY) {
         int rowNumber = finalX - startingX + 1;
@@ -32,9 +32,6 @@ public class AxeMan extends GameObject {
         int number = rowNumber * columnNumber;
 
         ArrayList<GameObject> warriors = new ArrayList<>(number);
-//            for (int i = 0, x = startingX, y = startingY; i < number; i++, y++) {
-//                warriors.add(new GameObject(x, y, ID.Ally));
-//            }
 
         for (int x = startingX; x <= finalX; x++) {
             for (int y = startingY; y <= finalY; y++) {
@@ -42,20 +39,5 @@ public class AxeMan extends GameObject {
             }
         }
         return warriors;
-    }
-
-    public Color objectColor(GameObject object) {
-
-        Color objectColor = new Color(255,255,255);
-
-        if(object.getId() == ID.Ally){
-            objectColor = new Color(207, 255, 74);
-        }
-
-        if(object.getId() == ID.Enemy){
-            objectColor = new Color(207, 255, 74);
-        }
-
-        return objectColor;
     }
 }
