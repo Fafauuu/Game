@@ -6,6 +6,11 @@ public class Knight extends GameObject {
 
     public Knight(int x, int y, ID id) {
         super(x, y, id);
+        super.setHp(300);
+        super.setMaxHp(300);
+        super.setBaseDmg(20);
+        super.setAttack(20);
+        super.setDefence(40);
     }
 
     public Knight() {
@@ -13,14 +18,14 @@ public class Knight extends GameObject {
 
     public ArrayList<GameObject> createAllyObjects(int startingX, int finalX, int startingY, int finalY) {
 
-        if (startingX > finalX){
+        if (startingX > finalX) {
             int buff;
             buff = finalX;
             finalX = startingX;
             startingX = buff;
         }
 
-        if (startingY > finalY){
+        if (startingY > finalY) {
             int buff;
             buff = finalY;
             finalY = startingY;

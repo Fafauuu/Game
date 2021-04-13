@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class View extends JFrame {
 
 
-    public static int size = 0;
+    private static int size = 0;
 
     public static void setSize(int size) {
         View.size = size;
@@ -63,14 +63,14 @@ public class View extends JFrame {
         }
         System.out.println();
 
-        for (int i = 0; i < field.size(); i++) {
-            for (int j = 0; j < field.get(i).size(); j++) {
-                System.out.print(field.get(i).get(j));
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        System.out.println();
+//        for (int i = 0; i < field.size(); i++) {
+//            for (int j = 0; j < field.get(i).size(); j++) {
+//                System.out.print(field.get(i).get(j));
+//                System.out.print(" ");
+//            }
+//            System.out.println();
+//        }
+//        System.out.println();
     }
 
 
@@ -98,7 +98,8 @@ public class View extends JFrame {
 
                 if (field.get(i).get(j).getId() != ID.Ground) {
 
-                    int hpBarSize = (int) Math.ceil((float)(rectSize - 10) * field.get(i).get(j).getHp() / 100);
+//                    int hpBarSize = (int) Math.ceil((float) (rectSize - 10) * field.get(i).get(j).getHp() / 100);
+                    int hpBarSize = (int) Math.ceil((float) (rectSize - 10) * field.get(i).get(j).getHp() / field.get(i).get(j).getMaxHp());
 
                     g.setColor(new Color(255, 255, 255));
                     g.fillRect(rectSize * j + 8 + 5, rectSize * i + 30 + 5, rectSize - 10, 5);
@@ -110,16 +111,6 @@ public class View extends JFrame {
             }
         }
 
-    }
-
-    public void repaintField() {
-        for (int i = 0; i < field.size(); i++) {
-            for (int j = 0; j < field.size(); j++) {
-                if (field.get(i).get(j).getId() != ID.Ground) {
-                    repaint(rectSize * j + 8, rectSize * i + 30, rectSize, rectSize);
-                }
-            }
-        }
     }
 
 }

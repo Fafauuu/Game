@@ -9,14 +9,20 @@ import java.io.IOException;
 public class GameObject {
 
     private int x, y;
+    private int previousX, previousY;
+    private int maxHp;
     private int hp;
+    private int baseDmg;
+    private int attack;
+    private int defence;
+
     private ID id;
     private Status status = Status.NotMoved;
 
     public GameObject(int x, int y, ID id) {
         this.x = x;
         this.y = y;
-        this.hp = 100;
+//        this.hp = 100;
         this.id = id;
     }
 
@@ -28,6 +34,21 @@ public class GameObject {
     public GameObject() {
     }
 
+//    public int getPreviousX() {
+//        return previousX;
+//    }
+//
+//    public int getPreviousY() {
+//        return previousY;
+//    }
+//
+//    public void setPreviousX(int previousX) {
+//        this.previousX = previousX;
+//    }
+//
+//    public void setPreviousY(int previousY) {
+//        this.previousY = previousY;
+//    }
 
     public int getX() {
         return x;
@@ -51,6 +72,38 @@ public class GameObject {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+    }
+
+    public int getBaseDmg() {
+        return baseDmg;
+    }
+
+    public void setBaseDmg(int baseDmg) {
+        this.baseDmg = baseDmg;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getDefence() {
+        return defence;
+    }
+
+    public void setDefence(int defence) {
+        this.defence = defence;
     }
 
     public ID getId() {
@@ -109,17 +162,20 @@ public class GameObject {
     public Color objectHpColor(GameObject object) {
 
         Color objectHpColor = new Color(255, 255, 255);
+        int objectHp = (int) Math.ceil((double)object.getHp()/object.getMaxHp() * 100);
 
-        if (object.getHp() > 75 && object.getHp() <= 100) {
+        System.out.println(object.getId() +  " X: " + object.getX() +  " Y: " + object.getY()  + " HP: " + objectHp +  " Attack: " + object.getAttack() +  " Defence: " + object.getDefence());
+
+        if (objectHp > 75 && objectHp <= 100) {
             objectHpColor = new Color(48, 226, 14);
         }
-        if (object.getHp() > 50 && object.getHp() <= 75) {
+        if (objectHp > 50 && objectHp <= 75) {
             objectHpColor = new Color(250, 225, 0);
         }
-        if (object.getHp() > 25 && object.getHp() <= 50) {
+        if (objectHp > 25 && objectHp <= 50) {
             objectHpColor = new Color(250, 113, 4);
         }
-        if (object.getHp() > 0 && object.getHp() <= 25) {
+        if (objectHp > 0 && objectHp <= 25) {
             objectHpColor = new Color(215, 11, 11);
         }
 
