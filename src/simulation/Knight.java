@@ -13,10 +13,7 @@ public class Knight extends GameObject {
         super.setDefence(40);
     }
 
-    public Knight() {
-    }
-
-    public ArrayList<GameObject> createAllyObjects(int startingX, int finalX, int startingY, int finalY) {
+    public static ArrayList<GameObject> createKnights(ID side, int startingX, int finalX, int startingY, int finalY) {
 
         if (startingX > finalX) {
             int buff;
@@ -40,22 +37,7 @@ public class Knight extends GameObject {
 
         for (int x = startingX; x <= finalX; x++) {
             for (int y = startingY; y <= finalY; y++) {
-                warriors.add(new Knight(x, y, ID.Ally));
-            }
-        }
-        return warriors;
-    }
-
-    public ArrayList<GameObject> createEnemyObjects(int startingX, int finalX, int startingY, int finalY) {
-        int rowNumber = finalX - startingX + 1;
-        int columnNumber = finalY - startingY + 1;
-        int number = rowNumber * columnNumber;
-
-        ArrayList<GameObject> warriors = new ArrayList<>(number);
-
-        for (int x = startingX; x <= finalX; x++) {
-            for (int y = startingY; y <= finalY; y++) {
-                warriors.add(new Knight(x, y, ID.Enemy));
+                warriors.add(new Knight(x, y, side));
             }
         }
         return warriors;

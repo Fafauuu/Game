@@ -1,37 +1,36 @@
 package simulation;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class Action {
 
-    ArrayList<ArrayList<GameObject>> board;
+    ArrayList<ArrayList<GameObject>> field;
 
-    public ArrayList<ArrayList<GameObject>> getBoard() {
-        return board;
+    public ArrayList<ArrayList<GameObject>> getField() {
+        return field;
     }
 
     public void setList(ArrayList<ArrayList<GameObject>> board) {
-        this.board = board;
+        this.field = board;
     }
 
     public void printField() {
-        System.out.println(board.size());
+        System.out.println(field.size());
     }
 
 
     public void placeWarriors(ArrayList<GameObject> list) {
 
-        int xToPlace = -1;
-        int yToPlace = -1;
+        int xToPlace;
+        int yToPlace;
 
         for (int i = 0; i < list.size(); i++) {
 
             xToPlace = list.get(i).getX();
             yToPlace = list.get(i).getY();
 
-            if (board.get(xToPlace).get(yToPlace).getId() == ID.Ground) {
-                board.get(list.get(i).getX()).set(list.get(i).getY(), list.get(i));
+            if (field.get(xToPlace).get(yToPlace).getId() == ID.Ground) {
+                field.get(xToPlace).set(yToPlace, list.get(i));
             } else {
                 System.out.println("Can't place stacked units!!!");
                 System.exit(0);
@@ -65,7 +64,7 @@ public class Action {
             if (warriors.get(i).getHp() <= 0) {
                 int x = warriors.get(i).getX();
                 int y = warriors.get(i).getY();
-                board.get(x).set(y, new GameObject(ID.Ground, Status.Ground));
+                field.get(x).set(y, new GameObject(ID.Ground, Status.Ground));
                 warriors.remove(i);
             }
         }
@@ -89,14 +88,11 @@ public class Action {
         int targetX = warrior.getX() + xModifier;
         int targetY = warrior.getY() + yModifier;
 
-        if (targetX >= 0 && targetX < board.size() && targetY >= 0 && targetY < board.size()) {
+        if (targetX >= 0 && targetX < field.size() && targetY >= 0 && targetY < field.size()) {
 
-
-            if (board.get(targetX).get(targetY).getId() == ID.Ground) {
-                board.get(targetX).set(targetY, warrior);
-                board.get(warrior.getX()).set(warrior.getY(), new GameObject(ID.Ground, Status.Ground));
-//                warrior.setPreviousX(warrior.getX());
-//                warrior.setPreviousY(warrior.getY());
+            if (field.get(targetX).get(targetY).getId() == ID.Ground) {
+                field.get(targetX).set(targetY, warrior);
+                field.get(warrior.getX()).set(warrior.getY(), new GameObject(ID.Ground, Status.Ground));
                 warrior.setX(targetX);
                 warrior.setY(targetY);
 
@@ -104,13 +100,10 @@ public class Action {
                 if (destination.equals("down")) warrior.setStatus(Status.MovedDown);
                 if (destination.equals("left")) warrior.setStatus(Status.MovedLeft);
                 if (destination.equals("right")) warrior.setStatus(Status.MovedRight);
-            } else {
-//                System.out.println("Can't stack objects");
-                return;
             }
+
         } else {
             System.out.println("Object moved out of board");
-            warrior.setStatus(Status.NotMoved);
         }
     }
 
@@ -119,27 +112,15 @@ public class Action {
         int attackValue = 0;
 
         if(attacker.getAttack() >= attackedWarrior.getDefence()) {
-            attackValue = attacker.getBaseDmg() +  2 * (attacker.getAttack() - attackedWarrior.getDefence());
+            attackValue = attacker.getBaseDmg() + (attacker.getAttack() - attackedWarrior.getDefence());
         }
-        else attackValue = attacker.getBaseDmg() + attackedWarrior.getDefence() - attacker.getAttack();
+        else attackValue = attacker.getBaseDmg();
 
-        System.out.println("AttackerX: " + attacker.getX() + " AttackerY: " + attacker.getY() + " DefenderX: " + attackedWarrior.getX() + " DefenderY: " + attackedWarrior.getY());
+//        System.out.println("AttackerX: " + attacker.getX() + " AttackerY: " + attacker.getY() + " DefenderX: " + attackedWarrior.getX() + " DefenderY: " + attackedWarrior.getY());
 
 
         attackedWarrior.setHp(attackedWarrior.getHp() - attackValue);
     }
-
-//    private void moveIfPossible(ArrayList<GameObject> warriors, int a, boolean allyToMove, int x, int y, int targetX, int targetY) {
-//        if ((warriors.get(a).getId() == ID.Ally && allyToMove) || warriors.get(a).getId() == ID.Enemy && !allyToMove) {
-//            if (Math.abs(targetX - x) >= Math.abs(targetY - y)) {
-//                if (targetX - x > 0) move(warriors.get(a), "down");
-//                if (targetX - x < 0) move(warriors.get(a), "up");
-//            } else {
-//                if (targetY - y > 0) move(warriors.get(a), "right");
-//                if (targetY - y < 0) move(warriors.get(a), "left");
-//            }
-//        }
-//    }
 
     private void moveIfPossible(ArrayList<GameObject> warriors, int a, boolean allyToMove, int x, int y, int targetX, int targetY) {
         if ((warriors.get(a).getId() == ID.Ally && allyToMove) || warriors.get(a).getId() == ID.Enemy && !allyToMove) {
@@ -171,21 +152,15 @@ public class Action {
     }
 
 
-    private void attackIfPossible(ArrayList<GameObject> warriors, int turn, int attackerListPosition, int attackerX, int attackerY, int targetX, int targetY) {
+    private void attackIfPossible(ArrayList<GameObject> warriors, int turn, int attackerListPosition, int targetX, int targetY) {
 
         boolean allyToMove;
         if (turn % 2 == 0) allyToMove = true;
         else allyToMove = false;
 
-//        GameObject attacker = null;
-
         for (int i = 0; i < warriors.size(); i++) {
             if ((warriors.get(i).getId() == ID.Ally && !allyToMove) || (warriors.get(i).getId() == ID.Enemy && allyToMove)) {
                 if (warriors.get(i).getX() == targetX && (warriors.get(i).getY() == targetY)) {
-//                    for (int j = 0; j < warriors.size(); j++) {
-//                        if (warriors.get(j).getX() == attackerX && (warriors.get(j).getY() == attackerY)) ;
-//                        attacker = warriors.get(j);
-//                    }
                     attack(warriors.get(attackerListPosition), warriors.get(i));
                     warriors.get(attackerListPosition).setStatus(Status.Attacked);
                 }
@@ -195,7 +170,7 @@ public class Action {
 
     public void scanForEnemy(ArrayList<GameObject> warriors, int turn) {
 
-        for (int t = 0; t < board.size(); t++) {
+        for (int t = 0; t < field.size(); t++) {
             for (int attackerListPosition = 0; attackerListPosition < warriors.size(); attackerListPosition++) {
                 if (t == 0 || (warriors.get(attackerListPosition).getStatus() == Status.NotMoved)) {
 
@@ -241,28 +216,22 @@ public class Action {
 
                     // Close range attack
                     if (minDistance == 1) {
-                        attackIfPossible(warriors, turn, attackerListPosition, x, y, targetX, targetY);
+                        attackIfPossible(warriors, turn, attackerListPosition, targetX, targetY);
                     }
 
-                    // Moving towards closest an enemy and charge attack
+                    // Move towards closest enemy and charge attack
                     if (minDistance > 1 && minDistance <= 2 && warriors.get(attackerListPosition).getStatus() != Status.Attacked) {
-
-//                        System.out.println("Before moving: " + warriors.get(attackerListPosition).getId() + " " + warriors.get(attackerListPosition).getStatus() + " x: " + warriors.get(attackerListPosition).getX() + " y: " + warriors.get(attackerListPosition).getY() + " targetX: " + targetX + " targetY: " + targetY);
-
                         moveIfPossible(warriors, attackerListPosition, allyToMove, x, y, targetX, targetY);
-
-//                        System.out.println("After moving: " + warriors.get(attackerListPosition).getId() + " " + warriors.get(attackerListPosition).getStatus() + " x: " + warriors.get(attackerListPosition).getX() + " y: " + warriors.get(attackerListPosition).getY() + " targetX: " + targetX + " targetY: " + targetY);
 
                         Status status = warriors.get(attackerListPosition).getStatus();
 
-
                         if ((status == Status.MovedUp && targetX - warriors.get(attackerListPosition).getX() == -1) || (status == Status.MovedDown && targetX - warriors.get(attackerListPosition).getX() == 1)
                                 || (status == Status.MovedLeft && targetY - warriors.get(attackerListPosition).getY() == -1) || (status == Status.MovedRight && targetY - warriors.get(attackerListPosition).getY() == 1))
-                            attackIfPossible(warriors, turn, attackerListPosition, x, y, targetX, targetY);
+                            attackIfPossible(warriors, turn, attackerListPosition, targetX, targetY);
 
                     }
 
-                    // Moving towards closest an enemy
+                    // Move towards closest enemy
                     if (warriors.get(attackerListPosition).getStatus() == Status.NotMoved) {
                         moveIfPossible(warriors, attackerListPosition, allyToMove, x, y, targetX, targetY);
                     }

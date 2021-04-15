@@ -10,7 +10,7 @@ public class View extends JFrame {
 
     private static int size = 0;
 
-    public static void setSize(int size) {
+    public void setSize(int size) {
         View.size = size;
     }
 
@@ -40,10 +40,6 @@ public class View extends JFrame {
         return field;
     }
 
-    public void setField(ArrayList<ArrayList<GameObject>> field) {
-        this.field = field;
-    }
-
     public void printNumbers() {
         for (int i = 0; i < field.size(); i++) {
             for (int j = 0; j < field.get(i).size(); j++) {
@@ -62,15 +58,6 @@ public class View extends JFrame {
             System.out.println();
         }
         System.out.println();
-
-//        for (int i = 0; i < field.size(); i++) {
-//            for (int j = 0; j < field.get(i).size(); j++) {
-//                System.out.print(field.get(i).get(j));
-//                System.out.print(" ");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println();
     }
 
 

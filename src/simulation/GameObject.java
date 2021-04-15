@@ -9,7 +9,6 @@ import java.io.IOException;
 public class GameObject {
 
     private int x, y;
-    private int previousX, previousY;
     private int maxHp;
     private int hp;
     private int baseDmg;
@@ -22,7 +21,6 @@ public class GameObject {
     public GameObject(int x, int y, ID id) {
         this.x = x;
         this.y = y;
-//        this.hp = 100;
         this.id = id;
     }
 
@@ -33,22 +31,6 @@ public class GameObject {
 
     public GameObject() {
     }
-
-//    public int getPreviousX() {
-//        return previousX;
-//    }
-//
-//    public int getPreviousY() {
-//        return previousY;
-//    }
-//
-//    public void setPreviousX(int previousX) {
-//        this.previousX = previousX;
-//    }
-//
-//    public void setPreviousY(int previousY) {
-//        this.previousY = previousY;
-//    }
 
     public int getX() {
         return x;
@@ -131,6 +113,7 @@ public class GameObject {
         }
 
 
+
         try {
             image = ImageIO.read(new File("src/icons/" + fileName + ".png"));
         } catch (IOException ex) {
@@ -164,7 +147,7 @@ public class GameObject {
         Color objectHpColor = new Color(255, 255, 255);
         int objectHp = (int) Math.ceil((double)object.getHp()/object.getMaxHp() * 100);
 
-        System.out.println(object.getId() +  " X: " + object.getX() +  " Y: " + object.getY()  + " HP: " + objectHp +  " Attack: " + object.getAttack() +  " Defence: " + object.getDefence());
+//        System.out.println(object.getId() +  " X: " + object.getX() +  " Y: " + object.getY()  + " HP: " + objectHp +  " Attack: " + object.getAttack() +  " Defence: " + object.getDefence());
 
         if (objectHp > 75 && objectHp <= 100) {
             objectHpColor = new Color(48, 226, 14);

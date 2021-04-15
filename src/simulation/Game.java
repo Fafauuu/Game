@@ -8,8 +8,6 @@ public class Game {
         View view = new View();
         view.setSize(10);
         view.setEmptyField();
-        Knight knight = new Knight();
-        AxeMan axeMan = new AxeMan();
         Action action = new Action();
 
         ArrayList<GameObject> list = new ArrayList<>(0);
@@ -28,10 +26,11 @@ public class Game {
 
 
         //Example of some greater battle
-        list.addAll(knight.createAllyObjects(1,2,0,3));
-        list.addAll(axeMan.createAllyObjects(0,2,6,8));
-        list.addAll(axeMan.createEnemyObjects(6,8,1,4));
-        list.addAll(knight.createEnemyObjects(6,9,7,8));
+        list.addAll(Knight.createKnights(ID.Ally,1,2,0,3));
+        list.addAll(AxeMan.createAxeMen(ID.Ally,0,2,6,8));
+        list.addAll(AxeMan.createAxeMen(ID.Enemy,6,8,1,4));
+        list.addAll(Knight.createKnights(ID.Enemy,6,9,7,8));
+
 
 //        //Example of differences in stats
 //        list.addAll(knight.createAllyObjects(0,0,0,0));
@@ -49,16 +48,14 @@ public class Game {
         view.setVisible(true);
 
         for (int x = 0, i = 9; x < 101; x++) {
-            Thread.sleep(1000);
-
-            System.out.println(list.size());
+            Thread.sleep(800);
 
             action.scanForEnemy(list, x);
 
             action.removeDeadWarriors(list);
             view.revalidate();
             view.repaint();
-            view.printNumbers();
+//            view.printNumbers();
             action.removeDeadWarriors(list);
 
             System.out.println(x+1);

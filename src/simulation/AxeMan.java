@@ -13,25 +13,22 @@ public class AxeMan extends GameObject {
         super.setDefence(30);
     }
 
-    public AxeMan() {
-    }
+    public static ArrayList<GameObject> createAxeMen(ID side, int startingX, int finalX, int startingY, int finalY) {
 
-    public ArrayList<GameObject> createAllyObjects(int startingX, int finalX, int startingY, int finalY) {
-        int rowNumber = finalX - startingX + 1;
-        int columnNumber = finalY - startingY + 1;
-        int number = rowNumber * columnNumber;
-
-        ArrayList<GameObject> warriors = new ArrayList<>(number);
-
-        for (int x = startingX; x <= finalX; x++) {
-            for (int y = startingY; y <= finalY; y++) {
-                warriors.add(new AxeMan(x, y, ID.Ally));
-            }
+        if (startingX > finalX) {
+            int buff;
+            buff = finalX;
+            finalX = startingX;
+            startingX = buff;
         }
-        return warriors;
-    }
 
-    public ArrayList<GameObject> createEnemyObjects(int startingX, int finalX, int startingY, int finalY) {
+        if (startingY > finalY) {
+            int buff;
+            buff = finalY;
+            finalY = startingY;
+            startingY = buff;
+        }
+
         int rowNumber = finalX - startingX + 1;
         int columnNumber = finalY - startingY + 1;
         int number = rowNumber * columnNumber;
@@ -40,7 +37,7 @@ public class AxeMan extends GameObject {
 
         for (int x = startingX; x <= finalX; x++) {
             for (int y = startingY; y <= finalY; y++) {
-                warriors.add(new AxeMan(x, y, ID.Enemy));
+                warriors.add(new AxeMan(x, y, side));
             }
         }
         return warriors;
