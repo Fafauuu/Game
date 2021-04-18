@@ -6,31 +6,22 @@ public class Action {
 
     ArrayList<ArrayList<GameObject>> field;
 
-    public ArrayList<ArrayList<GameObject>> getField() {
-        return field;
-    }
-
     public void setList(ArrayList<ArrayList<GameObject>> board) {
         this.field = board;
     }
-
-    public void printField() {
-        System.out.println(field.size());
-    }
-
 
     public void placeWarriors(ArrayList<GameObject> list) {
 
         int xToPlace;
         int yToPlace;
 
-        for (int i = 0; i < list.size(); i++) {
+        for (GameObject object : list) {
 
-            xToPlace = list.get(i).getX();
-            yToPlace = list.get(i).getY();
+            xToPlace = object.getX();
+            yToPlace = object.getY();
 
             if (field.get(xToPlace).get(yToPlace).getId() == ID.Ground) {
-                field.get(xToPlace).set(yToPlace, list.get(i));
+                field.get(xToPlace).set(yToPlace, object);
             } else {
                 System.out.println("Can't place stacked units!!!");
                 System.exit(0);
@@ -47,9 +38,9 @@ public class Action {
         boolean enemyPresence = false;
         boolean endSimulation = false;
 
-        for (int i = 0; i < warriors.size(); i++) {
-            if (warriors.get(i).getId() == ID.Ally) allyPresence = true;
-            if (warriors.get(i).getId() == ID.Enemy) enemyPresence = true;
+        for (GameObject warrior : warriors) {
+            if (warrior.getId() == ID.Ally) allyPresence = true;
+            if (warrior.getId() == ID.Enemy) enemyPresence = true;
         }
         if (!allyPresence || !enemyPresence) {
             endSimulation = true;
@@ -64,7 +55,7 @@ public class Action {
             if (warriors.get(i).getHp() <= 0) {
                 int x = warriors.get(i).getX();
                 int y = warriors.get(i).getY();
-                field.get(x).set(y, new GameObject(ID.Ground, Status.Ground));
+                field.get(x).set(y, new GameObject(ID.Ground));
                 warriors.remove(i);
             }
         }
@@ -92,7 +83,7 @@ public class Action {
 
             if (field.get(targetX).get(targetY).getId() == ID.Ground) {
                 field.get(targetX).set(targetY, warrior);
-                field.get(warrior.getX()).set(warrior.getY(), new GameObject(ID.Ground, Status.Ground));
+                field.get(warrior.getX()).set(warrior.getY(), new GameObject(ID.Ground));
                 warrior.setX(targetX);
                 warrior.setY(targetY);
 
@@ -158,10 +149,10 @@ public class Action {
         if (turn % 2 == 0) allyToMove = true;
         else allyToMove = false;
 
-        for (int i = 0; i < warriors.size(); i++) {
-            if ((warriors.get(i).getId() == ID.Ally && !allyToMove) || (warriors.get(i).getId() == ID.Enemy && allyToMove)) {
-                if (warriors.get(i).getX() == targetX && (warriors.get(i).getY() == targetY)) {
-                    attack(warriors.get(attackerListPosition), warriors.get(i));
+        for (GameObject warrior : warriors) {
+            if ((warrior.getId() == ID.Ally && !allyToMove) || (warrior.getId() == ID.Enemy && allyToMove)) {
+                if (warrior.getX() == targetX && (warrior.getY() == targetY)) {
+                    attack(warriors.get(attackerListPosition), warrior);
                     warriors.get(attackerListPosition).setStatus(Status.Attacked);
                 }
             }

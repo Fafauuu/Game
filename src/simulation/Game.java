@@ -7,6 +7,7 @@ public class Game {
     public static void main(String[] args) throws InterruptedException {
         View view = new View();
         view.setSize(10);
+        view.setRectSize(60);
         view.setEmptyField();
         Action action = new Action();
 
@@ -26,11 +27,10 @@ public class Game {
 
 
         //Example of some greater battle
-        list.addAll(Knight.createKnights(ID.Ally,1,2,0,3));
-        list.addAll(AxeMan.createAxeMen(ID.Ally,0,2,6,8));
-        list.addAll(AxeMan.createAxeMen(ID.Enemy,6,8,1,4));
-        list.addAll(Knight.createKnights(ID.Enemy,6,9,7,8));
-
+        list.addAll(GameObject.createObjects(ID.Ally, "knight", 1,3,0,3));
+        list.addAll(GameObject.createObjects(ID.Ally, "axeman",0,2,6,8));
+        list.addAll(GameObject.createObjects(ID.Enemy, "knight",6,8,1,4));
+        list.addAll(GameObject.createObjects(ID.Enemy, "axeman",6,8,7,8));
 
 //        //Example of differences in stats
 //        list.addAll(knight.createAllyObjects(0,0,0,0));
@@ -42,9 +42,7 @@ public class Game {
 
 
         action.setList(view.getField());
-        action.printField();
         action.placeWarriors(list);
-
         view.setVisible(true);
 
         for (int x = 0, i = 9; x < 101; x++) {

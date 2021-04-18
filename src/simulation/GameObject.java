@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameObject {
 
@@ -24,12 +25,8 @@ public class GameObject {
         this.id = id;
     }
 
-    public GameObject(ID id, Status status) {
-        this.id = id;
-        this.status = status;
-    }
-
-    public GameObject() {
+    public GameObject(ID id) {
+        this.id = id;;
     }
 
     public int getX() {
@@ -100,8 +97,43 @@ public class GameObject {
         this.status = status;
     }
 
+    public static ArrayList<GameObject> createObjects (ID side, String type, int startingX, int finalX, int startingY, int finalY) {
 
-    public BufferedImage objectIcon(GameObject object) {
+        ArrayList<GameObject> warriors = new ArrayList<>(0);
+
+        if (type.equals("knight") || type.equals("axeman") || type.equals("archer") || type.equals("cavalry")) {
+
+            if (startingX > finalX) {
+                int buff;
+                buff = finalX;
+                finalX = startingX;
+                startingX = buff;
+            }
+
+            if (startingY > finalY) {
+                int buff;
+                buff = finalY;
+                finalY = startingY;
+                startingY = buff;
+            }
+
+            for (int x = startingX; x <= finalX; x++) {
+                for (int y = startingY; y <= finalY; y++) {
+                    if (type.equals("knight")) warriors.add(new Knight(x, y, side));
+                    if (type.equals("axeman")) warriors.add(new AxeMan(x, y, side));
+//                    if (type.equals("archer")) warriors.add(new Archer(x, y, side));
+//                    if (type.equals("cavalry")) warriors.add(new Cavalry(x, y, side));
+                }
+            }
+        } else {
+            System.out.println("wrong unit type");
+            System.exit(0);
+        }
+        return warriors;
+    }
+
+
+    public static BufferedImage objectIcon(GameObject object) {
         BufferedImage image = null;
         String fileName = new String();
 
@@ -111,7 +143,12 @@ public class GameObject {
         if (object instanceof AxeMan) {
             fileName = "axe";
         }
-
+        if (object instanceof Archer) {
+            fileName = "archer";
+        }
+        if (object instanceof Cavalry) {
+            fileName = "cavalry";
+        }
 
 
         try {
@@ -123,7 +160,7 @@ public class GameObject {
         return image;
     }
 
-    public Color objectColor(GameObject object) {
+    public static Color objectColor(GameObject object) {
 
         Color objectColor = new Color(255, 255, 255);
 
@@ -142,10 +179,10 @@ public class GameObject {
         return objectColor;
     }
 
-    public Color objectHpColor(GameObject object) {
+    public static Color objectHpColor(GameObject object) {
 
         Color objectHpColor = new Color(255, 255, 255);
-        int objectHp = (int) Math.ceil((double)object.getHp()/object.getMaxHp() * 100);
+        int objectHp = (int) Math.ceil((double) object.getHp() / object.getMaxHp() * 100);
 
 //        System.out.println(object.getId() +  " X: " + object.getX() +  " Y: " + object.getY()  + " HP: " + objectHp +  " Attack: " + object.getAttack() +  " Defence: " + object.getDefence());
 

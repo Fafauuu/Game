@@ -2,13 +2,6 @@ package simulation;
 
 public enum Status {
 
-    Moved(),
-    MovedUp(),
-    MovedDown(),
-    MovedLeft(),
-    MovedRight(),
-    NotMoved(),
-    Attacked(),
-    Ground()
+    NotMoved, MovedUp, MovedDown, MovedLeft, MovedRight, Attacked,
 
 }
