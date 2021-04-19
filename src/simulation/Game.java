@@ -37,11 +37,15 @@ public class Game {
 
 
         //Example of charging
-        list.addAll(action.createObjects(ID.Ally, "cavalry",0,0,0,0));
-        list.addAll(action.createObjects(ID.Ally, "axeman",0,0,6,6));
-        list.addAll(action.createObjects(ID.Enemy, "knight",6,6,0,0));
-        list.addAll(action.createObjects(ID.Enemy, "axeman", 6,6,7,7));
+        list.addAll(action.createObjects(ID.Ally, "knight",0,0,0,0));
+        list.addAll(action.createObjects(ID.Ally, "axeman",0,0,3,3));
+        list.addAll(action.createObjects(ID.Ally, "cavalry",0,0,5,5));
+        list.addAll(action.createObjects(ID.Ally, "cavalry",0,0,8,8));
 
+        list.addAll(action.createObjects(ID.Enemy, "knight",6,6,0,0));
+        list.addAll(action.createObjects(ID.Enemy, "axeman", 6,6,2,2));
+        list.addAll(action.createObjects(ID.Enemy, "cavalry",6,6,5,5));
+        list.addAll(action.createObjects(ID.Enemy, "cavalry", 6,6,9,9));
 
 //        //Example of some greater battle
 //        list.addAll(action.createObjects(ID.Ally, "knight", 1,3,0,3));
