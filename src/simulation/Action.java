@@ -4,10 +4,61 @@ import java.util.ArrayList;
 
 public class Action {
 
-    ArrayList<ArrayList<GameObject>> field;
+    private ArrayList<ArrayList<GameObject>> field = new ArrayList<>(0);
+    ;
 
-    public void setList(ArrayList<ArrayList<GameObject>> board) {
-        this.field = board;
+    public void setEmptyField(int size) {
+
+        for (int i = 0; i < size; i++) {
+            field.add(new ArrayList<>(size));
+        }
+
+        GameObject ground = new GameObject(ID.Ground);
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                field.get(i).add(j, ground);
+            }
+        }
+    }
+
+    public ArrayList<ArrayList<GameObject>> getField() {
+        return field;
+    }
+
+    public ArrayList<GameObject> createObjects(ID side, String type, int startingX, int finalX, int startingY, int finalY) {
+
+        ArrayList<GameObject> warriors = new ArrayList<>(0);
+
+        if (type.equals("knight") || type.equals("axeman") || type.equals("archer") || type.equals("cavalry")) {
+
+            if (startingX > finalX) {
+                int buff;
+                buff = finalX;
+                finalX = startingX;
+                startingX = buff;
+            }
+
+            if (startingY > finalY) {
+                int buff;
+                buff = finalY;
+                finalY = startingY;
+                startingY = buff;
+            }
+
+            for (int x = startingX; x <= finalX; x++) {
+                for (int y = startingY; y <= finalY; y++) {
+                    if (type.equals("knight")) warriors.add(new Knight(x, y, side));
+                    if (type.equals("axeman")) warriors.add(new AxeMan(x, y, side));
+                    if (type.equals("archer")) warriors.add(new Archer(x, y, side));
+                    if (type.equals("cavalry")) warriors.add(new Cavalry(x, y, side));
+                }
+            }
+        } else {
+            System.out.println("wrong unit type");
+            System.exit(0);
+        }
+        return warriors;
     }
 
     public void placeWarriors(ArrayList<GameObject> list) {
@@ -26,8 +77,6 @@ public class Action {
                 System.out.println("Can't place stacked units!!!");
                 System.exit(0);
             }
-
-
         }
     }
 
@@ -50,7 +99,7 @@ public class Action {
     }
 
 
-    public void removeDeadWarriors(ArrayList<GameObject> warriors) {
+    private void removeDeadWarriors(ArrayList<GameObject> warriors) {
         for (int i = 0; i < warriors.size(); i++) {
             if (warriors.get(i).getHp() <= 0) {
                 int x = warriors.get(i).getX();
@@ -61,7 +110,7 @@ public class Action {
         }
     }
 
-    public void move(GameObject warrior, String destination) {
+    private void move(GameObject warrior, String destination) {
 
         if (warrior.getId() == ID.Ground) {
             System.out.println("Can't move ground");
@@ -98,21 +147,6 @@ public class Action {
         }
     }
 
-    public void attack(GameObject attacker, GameObject attackedWarrior) {
-
-        int attackValue = 0;
-
-        if(attacker.getAttack() >= attackedWarrior.getDefence()) {
-            attackValue = attacker.getBaseDmg() + (attacker.getAttack() - attackedWarrior.getDefence());
-        }
-        else attackValue = attacker.getBaseDmg();
-
-//        System.out.println("AttackerX: " + attacker.getX() + " AttackerY: " + attacker.getY() + " DefenderX: " + attackedWarrior.getX() + " DefenderY: " + attackedWarrior.getY());
-
-
-        attackedWarrior.setHp(attackedWarrior.getHp() - attackValue);
-    }
-
     private void moveIfPossible(ArrayList<GameObject> warriors, int a, boolean allyToMove, int x, int y, int targetX, int targetY) {
         if ((warriors.get(a).getId() == ID.Ally && allyToMove) || warriors.get(a).getId() == ID.Enemy && !allyToMove) {
 
@@ -143,16 +177,12 @@ public class Action {
     }
 
 
-    private void attackIfPossible(ArrayList<GameObject> warriors, int turn, int attackerListPosition, int targetX, int targetY) {
-
-        boolean allyToMove;
-        if (turn % 2 == 0) allyToMove = true;
-        else allyToMove = false;
+    private void attackIfPossible(ArrayList<GameObject> warriors, boolean allyToMove, int attackerListPosition, int targetX, int targetY) {
 
         for (GameObject warrior : warriors) {
             if ((warrior.getId() == ID.Ally && !allyToMove) || (warrior.getId() == ID.Enemy && allyToMove)) {
                 if (warrior.getX() == targetX && (warrior.getY() == targetY)) {
-                    attack(warriors.get(attackerListPosition), warrior);
+                    warriors.get(attackerListPosition).attack(warriors, warrior);
                     warriors.get(attackerListPosition).setStatus(Status.Attacked);
                 }
             }
@@ -164,6 +194,8 @@ public class Action {
         for (int t = 0; t < field.size(); t++) {
             for (int attackerListPosition = 0; attackerListPosition < warriors.size(); attackerListPosition++) {
                 if (t == 0 || (warriors.get(attackerListPosition).getStatus() == Status.NotMoved)) {
+
+                    removeDeadWarriors(warriors);
 
                     boolean allyToMove;
                     if (turn % 2 == 0) allyToMove = true;
@@ -204,22 +236,30 @@ public class Action {
                         }
                     }
 
+                    if (warriors.get(attackerListPosition) instanceof Archer) {
+                        if (minDistance == 1) {
+                            ((Archer) warriors.get(attackerListPosition)).setMelee(false);
+                        } else ((Archer) warriors.get(attackerListPosition)).setMelee(true);
+                    }
+
+                    int range = warriors.get(attackerListPosition).getRange();
 
                     // Close range attack
-                    if (minDistance == 1) {
-                        attackIfPossible(warriors, turn, attackerListPosition, targetX, targetY);
+                    if (minDistance <= range) {
+                        attackIfPossible(warriors, allyToMove, attackerListPosition, targetX, targetY);
                     }
 
                     // Move towards closest enemy and charge attack
-                    if (minDistance > 1 && minDistance <= 2 && warriors.get(attackerListPosition).getStatus() != Status.Attacked) {
+                    if (minDistance > range && minDistance <= range + 1 && warriors.get(attackerListPosition).getStatus() != Status.Attacked) {
                         moveIfPossible(warriors, attackerListPosition, allyToMove, x, y, targetX, targetY);
 
                         Status status = warriors.get(attackerListPosition).getStatus();
 
                         if ((status == Status.MovedUp && targetX - warriors.get(attackerListPosition).getX() == -1) || (status == Status.MovedDown && targetX - warriors.get(attackerListPosition).getX() == 1)
-                                || (status == Status.MovedLeft && targetY - warriors.get(attackerListPosition).getY() == -1) || (status == Status.MovedRight && targetY - warriors.get(attackerListPosition).getY() == 1))
-                            attackIfPossible(warriors, turn, attackerListPosition, targetX, targetY);
-
+                                || (status == Status.MovedLeft && targetY - warriors.get(attackerListPosition).getY() == -1) || (status == Status.MovedRight && targetY - warriors.get(attackerListPosition).getY() == 1)) {
+                            warriors.get(attackerListPosition).setStatus(Status.Charged);
+                            attackIfPossible(warriors, allyToMove, attackerListPosition, targetX, targetY);
+                        }
                     }
 
                     // Move towards closest enemy

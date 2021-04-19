@@ -1,13 +1,41 @@
 package simulation;
 
+import java.util.ArrayList;
+
 public class AxeMan extends GameObject {
 
     public AxeMan(int x, int y, ID id) {
         super(x, y, id);
-        super.setHp(300);
-        super.setMaxHp(300);
-        super.setBaseDmg(10);
-        super.setAttack(60);
-        super.setDefence(30);
+        super.setHp(200);
+        super.setMaxHp(200);
+    }
+
+    @Override
+    public void attack(ArrayList<GameObject> warriors, GameObject attackedObject){
+
+        int attackValue = 0;
+
+        if(attackedObject instanceof Knight) attackValue = 50;
+        if(attackedObject instanceof AxeMan) attackValue = 60;
+        if(attackedObject instanceof Archer) attackValue = 110;
+        if(attackedObject instanceof Cavalry) attackValue = 60;
+
+        attackedObject.setHp(attackedObject.getHp()-attackValue);
+
+        int x = getX();
+        int y = getY();
+
+        // AoE attack
+        for (GameObject warrior: warriors) {
+            if ((warrior != attackedObject) && warrior.getId()!=getId() && (((Math.abs(x - warrior.getX()) == 1) && (Math.abs(y - warrior.getY()) == 0)) ||
+                    ((Math.abs(x - warrior.getX()) == 0) && (Math.abs(y - warrior.getY()) == 1)))){
+                if(warrior instanceof Knight) attackValue = 25;
+                if(warrior instanceof AxeMan) attackValue = 30;
+                if(warrior instanceof Archer) attackValue = 55;
+                if(warrior instanceof Cavalry) attackValue = 30;
+
+                warrior.setHp(warrior.getHp()-attackValue);
+            }
+        }
     }
 }

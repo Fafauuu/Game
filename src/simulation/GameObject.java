@@ -7,14 +7,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameObject {
+public class GameObject{
 
     private int x, y;
     private int maxHp;
     private int hp;
-    private int baseDmg;
-    private int attack;
-    private int defence;
+    private int range = 1;
 
     private ID id;
     private Status status = Status.NotMoved;
@@ -27,6 +25,9 @@ public class GameObject {
 
     public GameObject(ID id) {
         this.id = id;;
+    }
+
+    public void attack(ArrayList<GameObject> warriors, GameObject attackedObject){
     }
 
     public int getX() {
@@ -61,29 +62,9 @@ public class GameObject {
         this.maxHp = maxHp;
     }
 
-    public int getBaseDmg() {
-        return baseDmg;
-    }
+    public int getRange() { return range; }
 
-    public void setBaseDmg(int baseDmg) {
-        this.baseDmg = baseDmg;
-    }
-
-    public int getAttack() {
-        return attack;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    public int getDefence() {
-        return defence;
-    }
-
-    public void setDefence(int defence) {
-        this.defence = defence;
-    }
+    public void setRange(int range) { this.range = range; }
 
     public ID getId() {
         return id;
@@ -96,42 +77,6 @@ public class GameObject {
     public void setStatus(Status status) {
         this.status = status;
     }
-
-    public static ArrayList<GameObject> createObjects (ID side, String type, int startingX, int finalX, int startingY, int finalY) {
-
-        ArrayList<GameObject> warriors = new ArrayList<>(0);
-
-        if (type.equals("knight") || type.equals("axeman") || type.equals("archer") || type.equals("cavalry")) {
-
-            if (startingX > finalX) {
-                int buff;
-                buff = finalX;
-                finalX = startingX;
-                startingX = buff;
-            }
-
-            if (startingY > finalY) {
-                int buff;
-                buff = finalY;
-                finalY = startingY;
-                startingY = buff;
-            }
-
-            for (int x = startingX; x <= finalX; x++) {
-                for (int y = startingY; y <= finalY; y++) {
-                    if (type.equals("knight")) warriors.add(new Knight(x, y, side));
-                    if (type.equals("axeman")) warriors.add(new AxeMan(x, y, side));
-//                    if (type.equals("archer")) warriors.add(new Archer(x, y, side));
-//                    if (type.equals("cavalry")) warriors.add(new Cavalry(x, y, side));
-                }
-            }
-        } else {
-            System.out.println("wrong unit type");
-            System.exit(0);
-        }
-        return warriors;
-    }
-
 
     public static BufferedImage objectIcon(GameObject object) {
         BufferedImage image = null;
@@ -147,7 +92,7 @@ public class GameObject {
             fileName = "archer";
         }
         if (object instanceof Cavalry) {
-            fileName = "cavalry";
+            fileName = "horse";
         }
 
 

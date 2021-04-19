@@ -15,33 +15,13 @@ public class View extends JFrame {
         this.size = size;
     }
 
+    public int getFieldSize() {
+        return size;
+    }
+
     public void setRectSize(int rectSize) { this.rectSize = rectSize; }
 
-    ArrayList<ArrayList<GameObject>> field = new ArrayList<>(size);
-
-
-    public void setEmptyField() {
-
-        for (int i = 0; i < size; i++) {
-            field.add(new ArrayList<>(size));
-        }
-
-        GameObject ground = new GameObject(ID.Ground);
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                field.get(i).add(j, ground);
-            }
-        }
-        setLocation(10, 50);
-        setSize(900, 900);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    }
-
-    public ArrayList<ArrayList<GameObject>> getField() {
-        return field;
-    }
+    private ArrayList<ArrayList<GameObject>> field;
 
     public void setField(ArrayList<ArrayList<GameObject>> field) {
         this.field = field;
@@ -71,6 +51,8 @@ public class View extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         for (int i = 0; i < field.size(); i++) {
             for (int j = 0; j < field.size(); j++) {
