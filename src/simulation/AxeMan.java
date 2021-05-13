@@ -1,5 +1,9 @@
 package simulation;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AxeMan extends GameObject {
@@ -17,7 +21,7 @@ public class AxeMan extends GameObject {
 
         if(attackedObject instanceof Knight) attackValue = 50;
         if(attackedObject instanceof AxeMan) attackValue = 60;
-        if(attackedObject instanceof Archer) attackValue = 110;
+        if(attackedObject instanceof Archer) attackValue = 90;
         if(attackedObject instanceof Cavalry) attackValue = 60;
 
         attackedObject.setHp(attackedObject.getHp()-attackValue);
@@ -37,5 +41,20 @@ public class AxeMan extends GameObject {
                 warrior.setHp(warrior.getHp()-attackValue);
             }
         }
+    }
+
+    @Override
+    public BufferedImage objectIcon() {
+        BufferedImage image = null;
+
+        String fileName = "axe";
+
+        try {
+            image = ImageIO.read(new File("src/icons/" + fileName + ".png"));
+        } catch (IOException ex) {
+            System.out.println("\nreading image issue\n");
+            ex.printStackTrace();
+        }
+        return image;
     }
 }

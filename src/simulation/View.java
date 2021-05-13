@@ -52,6 +52,7 @@ public class View extends JFrame {
     public void paint(Graphics g) {
         super.paint(g);
 
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         for (int i = 0; i < field.size(); i++) {
@@ -64,7 +65,8 @@ public class View extends JFrame {
 
 
                 if (field.get(i).get(j).getId() != ID.Ground) {
-                    g.drawImage(GameObject.objectIcon(field.get(i).get(j)), rectSize * j + 8, rectSize * i + 30, rectSize, rectSize, this);
+//                    g.drawImage(GameObject.objectIcon(field.get(i).get(j)), rectSize * j + 8, rectSize * i + 30, rectSize, rectSize, this);
+                    g.drawImage(field.get(i).get(j).objectIcon(), rectSize * j + 8, rectSize * i + 30, rectSize, rectSize, this);
                 }
 
 

@@ -1,10 +1,7 @@
 package simulation;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameObject{
@@ -14,7 +11,7 @@ public class GameObject{
     private int hp;
     private int range = 1;
 
-    private ID id;
+    private final ID id;
     private Status status = Status.NotMoved;
 
     public GameObject(int x, int y, ID id) {
@@ -24,7 +21,7 @@ public class GameObject{
     }
 
     public GameObject(ID id) {
-        this.id = id;;
+        this.id = id;
     }
 
     public void attack(ArrayList<GameObject> warriors, GameObject attackedObject){
@@ -78,32 +75,7 @@ public class GameObject{
         this.status = status;
     }
 
-    public static BufferedImage objectIcon(GameObject object) {
-        BufferedImage image = null;
-        String fileName = new String();
-
-        if (object instanceof Knight) {
-            fileName = "sword";
-        }
-        if (object instanceof AxeMan) {
-            fileName = "axe";
-        }
-        if (object instanceof Archer) {
-            fileName = "archer";
-        }
-        if (object instanceof Cavalry) {
-            fileName = "horse";
-        }
-
-
-        try {
-            image = ImageIO.read(new File("src/icons/" + fileName + ".png"));
-        } catch (IOException ex) {
-            System.out.println("\nreading image issue\n");
-            ex.printStackTrace();
-        }
-        return image;
-    }
+    public BufferedImage objectIcon(){return null;}
 
     public static Color objectColor(GameObject object) {
 
@@ -128,8 +100,6 @@ public class GameObject{
 
         Color objectHpColor = new Color(255, 255, 255);
         int objectHp = (int) Math.ceil((double) object.getHp() / object.getMaxHp() * 100);
-
-//        System.out.println(object.getId() +  " X: " + object.getX() +  " Y: " + object.getY()  + " HP: " + objectHp +  " Attack: " + object.getAttack() +  " Defence: " + object.getDefence());
 
         if (objectHp > 75 && objectHp <= 100) {
             objectHpColor = new Color(48, 226, 14);

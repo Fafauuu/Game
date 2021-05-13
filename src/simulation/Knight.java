@@ -1,5 +1,9 @@
 package simulation;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Knight extends GameObject {
@@ -21,5 +25,20 @@ public class Knight extends GameObject {
         if(attackedObject instanceof Cavalry) attackValue = 30;
 
         attackedObject.setHp(attackedObject.getHp()-attackValue);
+    }
+
+    @Override
+    public BufferedImage objectIcon() {
+        BufferedImage image = null;
+
+        String fileName = "sword";
+
+        try {
+            image = ImageIO.read(new File("src/icons/" + fileName + ".png"));
+        } catch (IOException ex) {
+            System.out.println("\nreading image issue\n");
+            ex.printStackTrace();
+        }
+        return image;
     }
 }

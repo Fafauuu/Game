@@ -2,10 +2,9 @@ package simulation;
 
 import java.util.ArrayList;
 
-public class Action {
+public class Engine {
 
     private ArrayList<ArrayList<GameObject>> field = new ArrayList<>(0);
-    ;
 
     public void setEmptyField(int size) {
 
@@ -108,6 +107,14 @@ public class Action {
                 warriors.remove(i);
             }
         }
+    }
+
+    public int numberOfUnits(ArrayList<GameObject> warriors, ID id){
+        int numberOfUnits = 0;
+        for (GameObject warrior: warriors) {
+            if (warrior.getId() == id)numberOfUnits++;
+        }
+        return numberOfUnits;
     }
 
     private void move(GameObject warrior, String destination) {
@@ -238,8 +245,8 @@ public class Action {
 
                     if (warriors.get(attackerListPosition) instanceof Archer) {
                         if (minDistance == 1) {
-                            ((Archer) warriors.get(attackerListPosition)).setMelee(false);
-                        } else ((Archer) warriors.get(attackerListPosition)).setMelee(true);
+                            ((Archer) warriors.get(attackerListPosition)).setMelee(true);
+                        } else ((Archer) warriors.get(attackerListPosition)).setMelee(false);
                     }
 
                     int range = warriors.get(attackerListPosition).getRange();
