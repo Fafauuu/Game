@@ -9,11 +9,12 @@ import java.util.ArrayList;
 public class Archer extends GameObject{
 
     private boolean melee = false;
+    private int ammunition = 5;
 
     public Archer(int x, int y, ID id) {
         super(x, y, id);
-        super.setHp(100);
-        super.setMaxHp(100);
+        super.setHp(300);
+        super.setMaxHp(300);
         super.setRange(3);
     }
 
@@ -31,14 +32,20 @@ public class Archer extends GameObject{
             if (attackedObject instanceof AxeMan) attackValue = 80;
             if (attackedObject instanceof Archer) attackValue = 50;
             if (attackedObject instanceof Cavalry) attackValue = 30;
+            attackedObject.setHp(attackedObject.getHp() - attackValue);
+            --ammunition;
         }else{
             if (attackedObject instanceof Knight) attackValue = 10;
             if (attackedObject instanceof AxeMan) attackValue = 20;
             if (attackedObject instanceof Archer) attackValue = 30;
             if (attackedObject instanceof Cavalry) attackValue = 10;
+            attackedObject.setHp(attackedObject.getHp() - attackValue);
         }
 
-        attackedObject.setHp(attackedObject.getHp() - attackValue);
+        if(ammunition < 1) melee = true;
+        int initialRange = getRange();
+        if(melee)setRange(1);
+        else setRange(initialRange);
 
     }
 

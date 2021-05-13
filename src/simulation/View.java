@@ -27,25 +27,25 @@ public class View extends JFrame {
         this.field = field;
     }
 
-    //    public void printNumbers() {
-//        for (int i = 0; i < field.size(); i++) {
-//            for (int j = 0; j < field.get(i).size(); j++) {
-//                System.out.print(field.get(i).get(j).getId());
-//                System.out.print(" ");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println();
-//
-//        for (int i = 0; i < field.size(); i++) {
-//            for (int j = 0; j < field.get(i).size(); j++) {
-//                System.out.print(field.get(i).get(j).getStatus());
-//                System.out.print(" ");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println();
-//    }
+        public void printNumbers() {
+        for (int i = 0; i < field.size(); i++) {
+            for (int j = 0; j < field.get(i).size(); j++) {
+                System.out.print(field.get(i).get(j).getId());
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+
+        for (int i = 0; i < field.size(); i++) {
+            for (int j = 0; j < field.get(i).size(); j++) {
+                System.out.print(field.get(i).get(j).getStatus());
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 
 
     @Override

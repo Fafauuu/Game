@@ -6,10 +6,15 @@ public class Game {
 
     public static void main(String[] args) throws InterruptedException {
         View view = new View();
-        view.setSize(15);
-        view.setRectSize(60);
+
+        int size = Integer.parseInt(args[0]);
+
+        int rectSize = 60;
+
+        view.setSize(size);
+        view.setRectSize(rectSize);
         view.setLocation(10, 50);
-        view.setSize(1000, 1000);
+        view.setSize(size * rectSize + 20, size * rectSize + 43);
 
         Engine engine = new Engine();
 
@@ -19,10 +24,36 @@ public class Game {
 
         ArrayList<GameObject> list = new ArrayList<>(0);
 
+        int loops = 0;
 
-        //Example of movement
-        list.addAll(engine.createObjects(ID.Ally, "knight", 0, 1, 0, 0));
-        list.addAll(engine.createObjects(ID.Enemy, "axeman",7, 7, 1, 1));
+        for (int i = 1; i < args.length; i++) {
+            if(i%6 == 0)loops++;
+        }
+
+        //Set field through main arguments
+        ID arg1 = null;
+        String arg2;
+        int arg3, arg4, arg5, arg6;
+
+        for (int i = 0; i < loops; i++) {
+            if (args[1 + 6 * i].equals("ally")) arg1 = ID.Ally;
+            else if (args[1 + 6 * i].equals("enemy")) arg1 = ID.Enemy;
+            else{
+                System.out.println("wrong ID");
+                System.exit(0);
+            }
+            arg2 = args[2 + 6 * i];
+            arg3 = Integer.parseInt(args[3 + 6 * i]);
+            arg4 = Integer.parseInt(args[4 + 6 * i]);
+            arg5 = Integer.parseInt(args[5 + 6 * i]);
+            arg6 = Integer.parseInt(args[6 + 6 * i]);
+
+            list.addAll(engine.createObjects(arg1, arg2, arg3, arg4, arg5, arg6));
+        }
+
+//        //Example of movement
+//        list.addAll(engine.createObjects(ID.Enemy, "knight", 0, 1, 0, 0));
+//        list.addAll(engine.createObjects(ID.Ally, "axeman",7, 7, 1, 1));
 
 //        //Example of differences in stats
 //        list.addAll(engine.createObjects(ID.Ally, "knight",0,0,0,0));
@@ -72,6 +103,7 @@ public class Game {
 
         engine.placeWarriors(list);
         view.setVisible(true);
+
 
         int x = 0;
         do{

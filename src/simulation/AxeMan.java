@@ -31,7 +31,12 @@ public class AxeMan extends GameObject {
 
         // AoE attack
         for (GameObject warrior: warriors) {
-            if ((warrior != attackedObject) && warrior.getId()!=getId() && (((Math.abs(x - warrior.getX()) == 1) && (Math.abs(y - warrior.getY()) == 0)) ||
+//
+//            System.out.println("attacker: " + warrior);
+//            System.out.println("defender: " + attackedObject);
+//            System.out.println("attacker != defender: " + !warrior.equals(attackedObject));
+
+            if ((!warrior.equals(attackedObject)) && warrior.getId()!=getId() && (((Math.abs(x - warrior.getX()) == 1) && (Math.abs(y - warrior.getY()) == 0)) ||
                     ((Math.abs(x - warrior.getX()) == 0) && (Math.abs(y - warrior.getY()) == 1)))){
                 if(warrior instanceof Knight) attackValue = 25;
                 if(warrior instanceof AxeMan) attackValue = 30;

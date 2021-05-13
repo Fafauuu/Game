@@ -31,6 +31,12 @@ public class Engine {
 
         if (type.equals("knight") || type.equals("axeman") || type.equals("archer") || type.equals("cavalry")) {
 
+            if(startingX < 0 || startingX >= field.size() || finalX < 0 || finalX >= field.size() ||
+             startingY < 0 || startingY >= field.size() || finalY < 0 || finalY >= field.size()){
+                System.out.println("objects created out of field");
+                System.exit(0);
+            }
+
             if (startingX > finalX) {
                 int buff;
                 buff = finalX;
@@ -188,7 +194,7 @@ public class Engine {
 
         for (GameObject warrior : warriors) {
             if ((warrior.getId() == ID.Ally && !allyToMove) || (warrior.getId() == ID.Enemy && allyToMove)) {
-                if (warrior.getX() == targetX && (warrior.getY() == targetY)) {
+                if (warrior.getX() == targetX && (warrior.getY() == targetY) && !warriors.get(attackerListPosition).equals(warrior)) {
                     warriors.get(attackerListPosition).attack(warriors, warrior);
                     warriors.get(attackerListPosition).setStatus(Status.Attacked);
                 }
